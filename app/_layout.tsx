@@ -5,6 +5,7 @@ import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 import '@/styles/global.css';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -22,8 +23,10 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <>
-      <StatusBar />
+    <SafeAreaProvider>
+       <StatusBar
+            style="auto"
+          />
 
       <Stack
         screenOptions={{
@@ -34,6 +37,6 @@ export default function RootLayout() {
           },
         }}
       />
-    </>
+    </SafeAreaProvider>
   );
 }
