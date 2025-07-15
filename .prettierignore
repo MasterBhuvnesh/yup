@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+bun.lockb
+
+# Build outputs
+.expo/
+dist/
+build/
+web-build/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.development
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache
+.eslintcache
+*.tsbuildinfo
+
+# Generated files
+*.generated.*
+metro.config.js
+
+# Expo
+.expo-shared/
+
+# Config files that shouldn't be formatted
+package-lock.json
+yarn.lock
+bun.lock
+
+# Binary files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.ttf
+*.woff
+*.woff2
+*.eot
+
