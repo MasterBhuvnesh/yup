@@ -5,11 +5,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ['Poppins-Regular', 'sans-serif'],
-        'poppins-bold': ['Poppins-Bold', 'sans-serif'],
-        'poppins-medium': ['Poppins-Medium', 'sans-serif'],
-        'poppins-semibold': ['Poppins-SemiBold', 'sans-serif'],
-        'poppins-black': ['Poppins-Black', 'sans-serif'],
+        geist: ['Geist-Regular', 'sans-serif'],
+        'geist-bold': ['Geist-Bold', 'sans-serif'],
+        'geist-medium': ['Geist-Medium', 'sans-serif'],
+        'geist-semibold': ['Geist-SemiBold', 'sans-serif'],
+        'geist-black': ['Geist-Black', 'sans-serif'],
       },
     },
   },

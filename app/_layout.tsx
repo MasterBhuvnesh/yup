@@ -8,11 +8,10 @@ import '@/styles/global.css';
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
-    'Poppins-Regular': require('@/assets/fonts/Poppins-Regular.ttf'),
-    'Poppins-Bold': require('@/assets/fonts/Poppins-Bold.ttf'),
-    'Poppins-Medium': require('@/assets/fonts/Poppins-Medium.ttf'),
-    'Poppins-SemiBold': require('@/assets/fonts/Poppins-SemiBold.ttf'),
-    'Poppins-Black': require('@/assets/fonts/Poppins-Black.ttf'),
+    'Geist-Regular': require('@/assets/fonts/Geist-Regular.ttf'),
+    'Geist-Bold': require('@/assets/fonts/Geist-Bold.ttf'),
+    'Geist-Medium': require('@/assets/fonts/Geist-Medium.ttf'),
+    'Geist-SemiBold': require('@/assets/fonts/Geist-SemiBold.ttf'),
   });
 
   useEffect(() => {
