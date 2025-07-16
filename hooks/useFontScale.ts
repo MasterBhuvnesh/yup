@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { PixelRatio, useWindowDimensions } from "react-native";
+import { useMemo } from 'react';
+import { PixelRatio, useWindowDimensions } from 'react-native';
 
 const BASE_WIDTH = 375;
 

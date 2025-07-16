@@ -1,35 +1,35 @@
-import { Text, type TextProps } from "react-native";
+import { Text, type TextProps } from 'react-native';
 
-import { useScaleFont } from "@/hooks/useFontScale";
+import { useScaleFont } from '@/hooks/useFontScale';
 
 export type ThemedTextProps = TextProps & {
   invert?: boolean;
   light?: boolean;
-  type?: "default" | "title" | "subtitle" | "link";
+  type?: 'default' | 'title' | 'subtitle' | 'link';
 };
 
 export function ThemedText({
   style,
   invert,
   light,
-  type = "default",
+  type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const color = light ? "#fff" : "#000";
+  const color = light ? '#fff' : '#000';
   const scale = useScaleFont();
 
   return (
     <Text
       style={[
         { color },
-        type === "default"
+        type === 'default'
           ? [styles.default(), { fontSize: scale(20) }]
           : undefined,
-        type === "title" ? styles.title() : undefined,
-        type === "subtitle"
+        type === 'title' ? styles.title() : undefined,
+        type === 'subtitle'
           ? [styles.subtitle(), { fontSize: scale(14.5) }]
           : undefined,
-        type === "link" ? styles.link() : undefined,
+        type === 'link' ? styles.link() : undefined,
         style,
       ]}
       {...rest}
@@ -39,24 +39,24 @@ export function ThemedText({
 
 const styles = {
   default: () => ({
-    fontFamily: "Geist-Medium",
+    fontFamily: 'Geist-Medium',
     fontSize: 20,
     lineHeight: 24,
   }),
   title: () => ({
-    fontFamily: "Geist-SemiBold",
+    fontFamily: 'Geist-SemiBold',
     fontSize: 32,
     lineHeight: 32,
   }),
   subtitle: () => ({
-    fontFamily: "Geist-Regular",
+    fontFamily: 'Geist-Regular',
     fontSize: 14.5,
     lineHeight: 24,
   }),
   link: () => ({
-    fontFamily: "Geist-Regular",
+    fontFamily: 'Geist-Regular',
     lineHeight: 30,
     fontSize: 16,
-    color: "#0a7ea4",
+    color: '#0a7ea4',
   }),
 };

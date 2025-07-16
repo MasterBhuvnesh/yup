@@ -1,6 +1,6 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { ThemedText } from "../ThemedText";
+import React from 'react';
+import { View } from 'react-native';
+import { ThemedText } from '../ThemedText';
 
 type ArticleProps = {
   title: string;
@@ -10,13 +10,17 @@ type ArticleProps = {
 
 const Article: React.FC<ArticleProps> = ({ title, content }) => {
   return (
-    <View style={styles.article}>
+    <View className="my-2 px-4 p-2 rounded-md">
       <View>
         <ThemedText type="default">{title}</ThemedText>
       </View>
-      <View style={styles.section}>
+      <View className="mt-2 space-y-5">
         {content.map((paragraph, i) => (
-          <ThemedText key={i} style={styles.content} type="subtitle">
+          <ThemedText
+            key={i}
+            className="opacity-80 font-geist-regular"
+            type="subtitle"
+          >
             {paragraph}
           </ThemedText>
         ))}
@@ -24,22 +28,5 @@ const Article: React.FC<ArticleProps> = ({ title, content }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  article: {
-    marginVertical: 10,
-    paddingHorizontal: 16,
-    padding: 10,
-    borderRadius: 5,
-  },
-  section: {
-    marginTop: 10,
-    gap: 20,
-  },
-  content: {
-    opacity: 0.8,
-    fontFamily: "GeistRegular",
-  },
-});
 
 export default Article;

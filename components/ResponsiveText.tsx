@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { TextProps, View } from "react-native";
-import { ThemedText, ThemedTextProps } from "./ThemedText";
+import { useState } from 'react';
+import { TextProps, View } from 'react-native';
+import { ThemedText, ThemedTextProps } from './ThemedText';
 
 type ResponsiveTextProps = {
   text: string;
@@ -22,8 +22,8 @@ const ResponsiveText: React.FC<ResponsiveTextProps> = ({
 
   return (
     <View
-      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
-      style={{ width: "100%" }}
+      onLayout={e => setWidth(e.nativeEvent.layout.width)}
+      style={{ width: '100%' }}
     >
       <ThemedText
         style={[{ fontSize, lineHeight: fontSize * 1.3 }, style]}

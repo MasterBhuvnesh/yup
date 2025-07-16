@@ -1,4 +1,4 @@
-import { View, type ViewProps } from "react-native";
+import { View, type ViewProps } from 'react-native';
 
 export type ThemedViewProps = ViewProps & {
   light?: string;
@@ -6,7 +6,7 @@ export type ThemedViewProps = ViewProps & {
 
 export function ThemedView({
   style,
-  light = "#fff",
+  light = '#fff',
   ...otherProps
 }: ThemedViewProps) {
   return <View style={[{ backgroundColor: light }, style]} {...otherProps} />;

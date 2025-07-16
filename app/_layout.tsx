@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 
 import '@/styles/global.css';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -24,9 +23,9 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-       <StatusBar
-            style="auto"
-          />
+      {/* <StatusBar
+          hidden
+          /> */}
 
       <Stack
         screenOptions={{

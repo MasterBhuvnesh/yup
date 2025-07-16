@@ -1,37 +1,25 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import Article from "@/components/ui/Article";
-import FlowBar from "@/components/ui/FlowBar";
-import Header from "@/components/ui/Header";
-import { BLOGS } from "@/constants"; // Single import
-import { useLocalSearchParams } from "expo-router";
-import React from "react";
-import { StyleSheet, ViewToken } from "react-native";
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import Article from '@/components/ui/Article';
+import FlowBar from '@/components/ui/FlowBar';
+import Header from '@/components/ui/Header';
+import { BLOGS } from '@/constants';
+import { router, useLocalSearchParams } from 'expo-router';
+import React from 'react';
+import { StyleSheet, ViewToken } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useDerivedValue,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 export default function ArticleReadingPage() {
   const { id } = useLocalSearchParams();
   const blogId = parseInt(id as string, 10);
 
-  // Find the blog by ID
-  const currentBlog = BLOGS.find((blog) => blog.id === blogId);
-
-  if (!currentBlog) {
-    return (
-      <ThemedView style={styles.container}>
-        <ThemedText>Blog not found</ThemedText>
-      </ThemedView>
-    );
-  }
-
-  const { content, title, sections } = currentBlog;
-
   const lastLoggedIndex = useSharedValue(0);
+  const scrollY = useSharedValue(0);
+  const totalHeight = useSharedValue(1);
 
   const onViewableItemsChanged = ({
     viewableItems,
@@ -39,7 +27,6 @@ export default function ArticleReadingPage() {
     viewableItems: ViewToken[];
   }) => {
     const lastItem = viewableItems[viewableItems.length - 1];
-
     if (lastItem?.isViewable && lastItem.index !== null) {
       lastLoggedIndex.value = lastItem.index;
     }
@@ -52,11 +39,8 @@ export default function ArticleReadingPage() {
     },
   ]);
 
-  const scrollY = useSharedValue(0);
-  const totalHeight = useSharedValue(1);
-
   const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
+    onScroll: event => {
       scrollY.value = event.contentOffset.y;
       totalHeight.value =
         event.contentSize.height - event.layoutMeasurement.height;
@@ -67,6 +51,18 @@ export default function ArticleReadingPage() {
     totalHeight.value > 0 ? scrollY.value / totalHeight.value : 0
   );
 
+  const currentBlog = BLOGS.find(blog => blog.id === blogId);
+
+  if (!currentBlog) {
+    return (
+      <ThemedView style={styles.container}>
+        <ThemedText>Blog not found</ThemedText>
+      </ThemedView>
+    );
+  }
+
+  const { content, title, sections } = currentBlog;
+
   return (
     <ThemedView style={styles.container}>
       <Animated.FlatList
@@ -74,18 +70,16 @@ export default function ArticleReadingPage() {
           <Header
             title={title}
             content={content}
-            onBackPress={() => {}}
+            onBackPress={() => {
+              router.back();
+            }}
           />
         )}
         style={styles.flatList}
         contentContainerStyle={styles.contentContainer}
         data={sections}
         renderItem={({ item, index }) => (
-          <Article
-            title={item.title}
-            content={item.content}
-            index={index}
-          />
+          <Article title={item.title} content={item.content} index={index} />
         )}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
@@ -108,11 +102,11 @@ export default function ArticleReadingPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   flatList: {
     flex: 1,
-    alignSelf: "center",
+    alignSelf: 'center',
     maxWidth: 640,
   },
   contentContainer: {

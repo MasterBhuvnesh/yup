@@ -1,8 +1,8 @@
-import { useScaleFont } from "@/hooks/useFontScale";
-import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import ResponsiveText from "../ResponsiveText";
-import { ThemedText } from "../ThemedText";
+import { useScaleFont } from '@/hooks/useFontScale';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity, View } from 'react-native';
+import ResponsiveText from '../ResponsiveText';
+import { ThemedText } from '../ThemedText';
 
 interface HeaderProps {
   title: string;
@@ -13,8 +13,8 @@ interface HeaderProps {
 const Header = ({ title, content, onBackPress }: HeaderProps) => {
   const scaleFont = useScaleFont();
   return (
-    <View style={styles.container}>
-      <View style={styles.nav}>
+    <View className="flex flex-col items-center px-4 py-3 gap-1">
+      <View className="flex-row w-full py-4 items-center justify-between">
         <TouchableOpacity onPress={onBackPress}>
           <Ionicons
             name="chevron-back-outline"
@@ -23,41 +23,16 @@ const Header = ({ title, content, onBackPress }: HeaderProps) => {
           />
         </TouchableOpacity>
       </View>
-      <View style={styles.head}>
+      <View className="flex flex-col w-full gap-1.5">
         <View>
           <ResponsiveText text={title} baseSize={29} type="title" />
         </View>
-        <ThemedText style={styles.content} type="subtitle">
+        <ThemedText className="py-1.5" type="subtitle">
           {content}
         </ThemedText>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    gap: 4,
-  },
-  nav: {
-    flexDirection: "row",
-    width: "100%",
-    paddingVertical: 16,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  head: {
-    flexDirection: "column",
-    width: "100%",
-    gap: 6,
-  },
-  content: {
-    paddingVertical: 5,
-  },
-});
 
 export default Header;

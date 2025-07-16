@@ -1,14 +1,14 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useScaleFont } from '@/hooks/useFontScale';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import Animated, {
-  useAnimatedStyle,
-  interpolate,
-  useDerivedValue,
-  SharedValue,
   Extrapolation,
-} from "react-native-reanimated";
-import { ThemedText } from "../ThemedText";
-import { useScaleFont } from "@/hooks/useFontScale";
+  interpolate,
+  SharedValue,
+  useAnimatedStyle,
+  useDerivedValue,
+} from 'react-native-reanimated';
+import { ThemedText } from '../ThemedText';
 
 type TimeFlowProps = {
   seconds: SharedValue<number>;
@@ -40,7 +40,7 @@ const TimeFlowDigit: React.FC<{ digit: SharedValue<number> }> = ({ digit }) => {
   return (
     <View style={styles.digitContainer}>
       <Animated.View style={animatedStyle}>
-        {[...Array(TOTAL_DIGITS).keys()].map((num) => (
+        {[...Array(TOTAL_DIGITS).keys()].map(num => (
           <ThemedText
             light
             key={num}
@@ -55,7 +55,7 @@ const TimeFlowDigit: React.FC<{ digit: SharedValue<number> }> = ({ digit }) => {
   );
 };
 
-const extractDigit = (
+const useExtractDigit = (
   value: SharedValue<number>,
   divisor: number,
   place: number
@@ -66,20 +66,20 @@ const extractDigit = (
 };
 
 const TimeFlow: React.FC<TimeFlowProps> = ({ seconds, hours = true }) => {
-  const hoursTens = extractDigit(seconds, 3600, 10);
-  const hoursOnes = extractDigit(seconds, 3600, 1);
-  const minutesTens = extractDigit(seconds, 60, 10);
-  const minutesOnes = extractDigit(seconds, 60, 1);
-  const secondsTens = extractDigit(seconds, 1, 10);
-  const secondsOnes = extractDigit(seconds, 1, 1);
+  const hoursTens = useExtractDigit(seconds, 3600, 10);
+  const hoursOnes = useExtractDigit(seconds, 3600, 1);
+  const minutesTens = useExtractDigit(seconds, 60, 10);
+  const minutesOnes = useExtractDigit(seconds, 60, 1);
+  const secondsTens = useExtractDigit(seconds, 1, 10);
+  const secondsOnes = useExtractDigit(seconds, 1, 1);
   const scaleFont = useScaleFont();
   const fontSize = scaleFont(11.5);
 
   const hourWidth = useAnimatedStyle(() => {
     return {
-      width: hours || hoursOnes.value > 0 ? "auto" : 0,
-      overflow: "hidden",
-      flexDirection: "row",
+      width: hours || hoursOnes.value > 0 ? 'auto' : 0,
+      overflow: 'hidden',
+      flexDirection: 'row',
     };
   });
 
@@ -107,13 +107,13 @@ export default TimeFlow;
 
 const styles = StyleSheet.create({
   timeFlow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     opacity: 0.4,
   },
-  digitContainer: { width: 8, height: DIGIT_HEIGHT, overflow: "hidden" },
+  digitContainer: { width: 8, height: DIGIT_HEIGHT, overflow: 'hidden' },
   digitText: {
-    textAlign: "center",
+    textAlign: 'center',
     lineHeight: DIGIT_HEIGHT,
     height: DIGIT_HEIGHT,
   },
