@@ -1,0 +1,97 @@
+# This is a GitHub Actions workflow named "Fetch API Data and Backup"
+name: Fetch API Data and Backup
+
+# Controls when the action will run.
+# This workflow runs on a schedule (every day at midnight UTC)
+# and can also be triggered manually from the Actions tab (workflow_dispatch).
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Allows manual triggering
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "fetch-and-save"
+  fetch-and-save:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Step 1: Check out the repository's code
+      # This action checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Install jq
+      # We ensure jq is installed on the runner for JSON processing.
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      # Step 3: Fetch data from an API using a dynamic topic
+      # This step selects a topic from topics.json based on the day of the year and makes a POST request.
+      - name: Fetch API data
+        run: |
+          # Get the day of the year (1-366) and subtract 1 for a zero-based index
+          day_of_year=$(date +%j)
+          topic_index=$((day_of_year - 1))
+
+          # Read the topic from topics.json using the index
+          # The -r flag removes the quotes from the output string
+          topic=$(jq -r --argjson index "$topic_index" '.[$index]' topics.json)
+          echo "Selected topic for today: $topic"
+
+          # Create the JSON payload for the POST request
+          payload=$(jq -n --arg topic "$topic" '{topic: $topic}')
+          echo "Payload: $payload"
+
+          # Make the POST request with curl and save the response
+          curl -s -X POST "https://yup-qcha.onrender.com/api/v1/article/generate" \
+          -H "Content-Type: application/json" \
+          -d "$payload" \
+          -o api_data.json
+
+          echo "API data fetched and saved to api_data.json"
+          echo "API Response:"
+          cat api_data.json
+
+      # Step 4: Ensure backup.json exists and append data
+      # This step uses a bash script to handle the logic of creating and appending data.
+      - name: Append data to backup.json
+        run: |
+          # Check if backup.json exists. If not, create it with an empty JSON array.
+          if [ ! -f backup.json ]; then
+            echo "backup.json not found. Creating a new one."
+            echo "[]" > backup.json
+          fi
+
+          # Check if the api_data.json is empty or contains an error
+          if [ ! -s api_data.json ] || ! jq -e . api_data.json >/dev/null 2>&1; then
+            echo "API response is empty or not valid JSON. Skipping append."
+            exit 0
+          fi
+
+          # Use 'jq' to merge the new API data with the existing data in backup.json
+          # The new object from api_data.json is wrapped in an array `[.[1]]` before being added
+          # to the existing array in backup.json `.[0]`. This correctly appends the object.
+          jq -s '.[0] + [.[1]]' backup.json api_data.json > temp_backup.json && mv temp_backup.json backup.json
+
+          echo "Data appended to backup.json"
+          echo "Current content of backup.json:"
+          cat backup.json
+
+      # Step 5: Commit and push the updated backup.json
+      # This step commits the changes made to backup.json back to your repository.
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          # The commit message for the update
+          commit_message: "docs: Update data backup"
+          # The file pattern to commit. In this case, both backup.json and potentially a new topics.json
+          file_pattern: "backup.json topics.json"
+          # Optional: The branch to push to. Defaults to the current branch.
+          # branch: main
+          # Optional: Add a custom author and committer
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "actions@github.com"
+          commit_author: "GitHub Actions Bot <actions@github.com>"
