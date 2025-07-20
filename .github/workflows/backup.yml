@@ -32,6 +32,13 @@ jobs:
       # This step selects a topic from topics.json based on the day of the year and makes a POST request.
       - name: Fetch API data
         run: |
+          # Check if topics.json exists before proceeding
+          if [ ! -f topics.json ]; then
+            echo "Error: topics.json file not found in the root of the repository."
+            echo "Please create this file and populate it with a JSON array of topics."
+            exit 1
+          fi
+
           # Get the day of the year (1-366) and subtract 1 for a zero-based index
           day_of_year=$(date +%j)
           topic_index=$((day_of_year - 1))
