@@ -1,6 +1,7 @@
 import * as NavigationBar from 'expo-navigation-bar';
 import { Slot } from 'expo-router';
 import { useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Layout() {
   useEffect(() => {
@@ -8,5 +9,10 @@ export default function Layout() {
     NavigationBar.setVisibilityAsync('hidden');
   }, []);
 
-  return <Slot />;
+  return (
+    <>
+      <StatusBar hidden />
+      <Slot />
+    </>
+  );
 }

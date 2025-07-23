@@ -1,10 +1,7 @@
-import { ThemedText } from '@/components/ThemedText';
-
-import { ThemedView } from '@/components/ThemedView';
 import { BLOGS } from '@/constants';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native';
+import { FlatList, Image, Pressable, View, Text } from 'react-native';
 
 interface BlogCardProps {
   blog: (typeof BLOGS)[0];
@@ -13,34 +10,58 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ blog, onPress }) => {
   return (
-    <Pressable onPress={onPress} style={styles.card}>
-      <Image source={{ uri: blog.imageUrl }} style={styles.cardImage} />
-      <View style={styles.cardContent}>
-        <ThemedText style={styles.title} numberOfLines={2}>
+    <Pressable
+      onPress={onPress}
+      className="bg-neutral-50 border border-neutral-300 rounded-xl overflow-hidden mb-5 mx-1"
+      style={{
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 12,
+        elevation: 3,
+      }}
+    >
+      <Image
+        source={{ uri: blog.imageUrl }}
+        className="w-full h-52 bg-neutral-200"
+        resizeMode="cover"
+      />
+      <View className="p-5">
+        <Text
+          className="text-2xl font-geist-bold mb-3 text-neutral-900 leading-8"
+          numberOfLines={2}
+        >
           {blog.title}
-        </ThemedText>
-        <ThemedText style={styles.author}>By {blog.author}</ThemedText>
-        <ThemedText style={styles.date}>
+        </Text>
+        <Text className="text-base font-geist-semibold text-neutral-600 mb-2">
+          By {blog.author}
+        </Text>
+        <Text className="text-sm font-geist text-neutral-500 mb-4">
           {new Date(blog.date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}
-        </ThemedText>
-        <ThemedText style={styles.excerpt} numberOfLines={3}>
+        </Text>
+        <Text
+          className="text-base leading-6 text-neutral-700 mb-5 font-geist"
+          numberOfLines={3}
+        >
           {blog.excerpt}
-        </ThemedText>
-        <View style={styles.tagsContainer}>
+        </Text>
+        <View className="flex-row flex-wrap gap-2">
           {blog.tags.slice(0, 3).map((tag, index) => (
-            <View key={index} style={styles.tag}>
-              <ThemedText style={styles.tagText}>{tag}</ThemedText>
+            <View key={index} className="bg-neutral-800 px-3 py-2 rounded-full">
+              <Text className="text-sm text-neutral-50 font-geist-medium">
+                {tag}
+              </Text>
             </View>
           ))}
           {blog.tags.length > 3 && (
-            <View style={styles.tag}>
-              <ThemedText style={styles.tagText}>
+            <View className="bg-neutral-600 px-3 py-2 rounded-full">
+              <Text className="text-sm text-neutral-50 font-geist-medium">
                 +{blog.tags.length - 3}
-              </ThemedText>
+              </Text>
             </View>
           )}
         </View>
@@ -64,113 +85,24 @@ export default function BlogListingPage() {
   );
 
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.header}>
-        <ThemedText style={styles.headerTitle}>Blog Articles</ThemedText>
-        <ThemedText style={styles.headerSubtitle}>
+    <View className="flex-1 bg-neutral-100">
+      <View className="px-6 pt-16 pb-8 bg-neutral-50 border-b border-neutral-300">
+        <Text className="text-4xl font-geist-bold text-neutral-900 mb-2">
+          Blog Articles
+        </Text>
+        <Text className="text-lg text-neutral-600 font-geist">
           Discover insights and stories
-        </ThemedText>
+        </Text>
       </View>
 
       <FlatList
-        data={BLOGS} // Use BLOGS directly
+        data={BLOGS}
         renderItem={renderBlogCard}
         keyExtractor={item => item.id.toString()}
-        contentContainerStyle={styles.listContainer}
+        className="px-4 pt-6"
+        contentContainerStyle={{ paddingBottom: 20 }}
         showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
-    </ThemedView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f9fa',
-    marginTop: 2,
-  },
-  header: {
-    padding: 20,
-    paddingTop: 60,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
-  },
-  headerTitle: {
-    fontSize: 32,
-    // fontWeight: "bold",
-    // marginBottom: 8,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    opacity: 0.7,
-  },
-  listContainer: {
-    padding: 16,
-    paddingBottom: 100,
-  },
-  separator: {
-    height: 16,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  cardImage: {
-    width: '100%',
-    height: 200,
-    backgroundColor: '#e9ecef',
-  },
-  cardContent: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    lineHeight: 26,
-  },
-  author: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#6c757d',
-    marginBottom: 4,
-  },
-  date: {
-    fontSize: 12,
-    color: '#6c757d',
-    marginBottom: 12,
-  },
-  excerpt: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: '#495057',
-    marginBottom: 16,
-  },
-  tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  tag: {
-    backgroundColor: '#e9ecef',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  tagText: {
-    fontSize: 12,
-    color: '#495057',
-    fontWeight: '500',
-  },
-});
