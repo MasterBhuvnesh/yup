@@ -1,11 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import * as admin from 'firebase-admin';
+import Joi from 'joi';
 
 import db from '@/config/firebase';
 import { authenticate } from '@/middleware/auth';
 import { logger } from '@/utils/logger';
 import { registerTokenSchema } from '@/validators/register.token.validator';
-import Joi from 'joi';
 
 const router = Router();
 
