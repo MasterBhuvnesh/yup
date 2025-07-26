@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: bun-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+
+    # To build and start the containers:
+    # docker-compose up --build
+
+    # To start the containers without rebuilding:
+    # docker-compose up
+
+    # To stop the containers:
+    # docker-compose down
+
+    # To view running containers:
+    # docker-compose ps
+
+    # To view logs:
+    # docker-compose logs
+
+    # To run a command in the app container:
+    # docker-compose exec app <command>

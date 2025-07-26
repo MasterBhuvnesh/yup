@@ -1,10 +1,8 @@
-import * as dotenv from 'dotenv';
+
 import { Request, Response, NextFunction } from 'express';
 
 import { logger } from '@/utils/logger';
 
-// Load .env variables
-dotenv.config();
 
 const expectedToken = process.env.AUTH_TOKEN;
 

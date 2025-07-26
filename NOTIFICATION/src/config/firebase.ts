@@ -1,10 +1,6 @@
-import * as dotenv from 'dotenv';
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin'; // Changed from * as admin
 
 import getServiceAccount from './serviceAccount';
-
-// Load env variables
-dotenv.config();
 
 // Validate required environment variables
 const requiredEnvVars = [
