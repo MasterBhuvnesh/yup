@@ -2,34 +2,6 @@
 
 This service is responsible for handling push notifications.
 
-## File Structure
-
-```
-E:/PROJECTS/yup/NOTIFICATION/
-├───.env.sample
-├───nodemon.json
-├───package.json
-├───tsconfig.json
-├───node_modules/...
-├───secrets/...
-└───src/
-    ├───app.ts
-    ├───index.ts
-    ├───config/
-    │   └───firebase.ts
-    ├───jobs/
-    │   └───heartbeat.ts
-    ├───middleware/
-    │   └───auth.ts
-    ├───routes/
-    │   ├───get.tokens.ts
-    │   ├───healthcheck.ts
-    │   ├───register.token.ts
-    │   └───send.notification.ts
-    └───utils/
-        └───logger.ts
-```
-
 ## API Endpoints
 
 ### Health Check
