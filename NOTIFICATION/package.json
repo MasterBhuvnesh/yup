@@ -8,9 +8,12 @@
     "dev": "nodemon",
     "build": "node scripts/build.js",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "validate": "tsc --noEmit && eslint . --ext .ts && prettier --check .",
+    "validate:fix": "tsc --noEmit && eslint . --ext .ts --fix && prettier --write ."
   },
   "keywords": [
     "expo",

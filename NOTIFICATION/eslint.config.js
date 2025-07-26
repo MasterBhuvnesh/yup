@@ -4,7 +4,9 @@ const parserTS = require('@typescript-eslint/parser');
 
 module.exports = [
   {
-    // ignores: ['node_modules', 'dist', 'package.json', 'tsconfig.json'],
+    ignores: ['dist', 'node_modules'],
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
       parser: parserTS,
