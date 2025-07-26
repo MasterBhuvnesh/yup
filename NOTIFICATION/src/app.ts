@@ -1,6 +1,7 @@
 import express from "express";
 import registerTokenRoute from "./routes/register.token";
 import getTokensRoute from "./routes/get.tokens";
+import healthcheckRoute from "./routes/healthcheck";
 // import { authenticate } from "./middleware/auth";
 
 // Initialize express app
@@ -13,6 +14,7 @@ app.use(express.json());
 // app.use(authenticate);
 
 // Routes
+app.use("/", healthcheckRoute);
 app.use("/", registerTokenRoute);
 app.use("/", getTokensRoute);
 app.use("*", (_req, res) => {
