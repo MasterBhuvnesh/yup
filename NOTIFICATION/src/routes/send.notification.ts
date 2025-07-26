@@ -1,54 +1,35 @@
 import { Router, Request, Response } from "express";
 import db from "../config/firebase";
 import axios from "axios";
-import { logger } from "../utils/logger";
 import { authenticate } from "../middleware/auth";
+import { logger } from "../utils/logger";
 
 const router = Router();
 
-// Sample 1-liners about Machine Learning
-const machineLearningFacts = [
-  "Machine learning helps computers learn from data without explicit programming.",
-  "Supervised learning requires labeled training data.",
-  "Neural networks are inspired by the human brain.",
-  "Unsupervised learning finds hidden patterns in unlabeled data.",
-  "Reinforcement learning trains agents via reward and punishment.",
-];
-
 /**
  * @route   POST /send
- * @desc    Send push notifications to all stored Expo tokens
+ * @desc    Send a push notification to all registered Expo tokens
  * @access  Protected
  */
 router.post("/send", authenticate, async (_req: Request, res: Response) => {
   try {
     const snapshot = await db.collection("tokens").get();
-
     if (snapshot.empty) {
-      return res.status(404).json({ message: "No tokens found" });
+      return res.status(200).json({ message: "No tokens to send." });
     }
 
-    const notifications: any = [];
-    const title = "Machine Learning";
-    const body =
-      machineLearningFacts[
-        Math.floor(Math.random() * machineLearningFacts.length)
-      ];
+    const tokens: string[] = [];
+    snapshot.forEach((doc) => tokens.push(doc.id));
 
-    snapshot.forEach((doc) => {
-      const token = doc.data().token;
-      if (token && token.startsWith("ExponentPushToken")) {
-        notifications.push({
-          to: token,
-          title,
-          body,
-        });
-      }
-    });
+    const messages = tokens.map((token) => ({
+      to: token,
+      title: "Machine Learning",
+      body: "Deep learning enables neural networks to learn patterns efficiently.",
+    }));
 
     const response = await axios.post(
       "https://exp.host/--/api/v2/push/send",
-      notifications,
+      messages,
       {
         headers: {
           "Content-Type": "application/json",
@@ -56,15 +37,41 @@ router.post("/send", authenticate, async (_req: Request, res: Response) => {
       }
     );
 
-    logger.log("📨 Notifications sent:", response.data);
+    type ExpoPushResponse = { data: any[] };
+    const responseData = response.data as ExpoPushResponse;
+    const results = responseData.data;
+    const invalidTokens: string[] = [];
 
-    return res.status(200).json({
-      message: `Notifications sent to ${notifications.length} devices`,
-      data: response.data,
+    results.forEach((result: any, index: number) => {
+      if (
+        result.status === "error" &&
+        result.details?.error === "DeviceNotRegistered"
+      ) {
+        const invalidToken = tokens[index];
+        invalidTokens.push(invalidToken);
+      }
+    });
+
+    // Delete invalid tokens from Firestore
+    const deleteOps = invalidTokens.map((token) =>
+      db.collection("tokens").doc(token).delete()
+    );
+    await Promise.all(deleteOps);
+
+    logger.log(`✅ Sent to ${tokens.length - invalidTokens.length} devices`);
+    if (invalidTokens.length > 0) {
+      logger.warn(`🧹 Deleted ${invalidTokens.length} invalid tokens`);
+    }
+
+    res.status(200).json({
+      message: `Notifications sent to ${
+        tokens.length - invalidTokens.length
+      } devices`,
+      deleted: invalidTokens.length > 0 ? invalidTokens : undefined,
     });
   } catch (err: any) {
-    logger.error("Failed to send push notifications:", err.message);
-    return res.status(500).json({ message: "Failed to send notifications" });
+    logger.error("❌ Failed to send notifications:", err.message);
+    res.status(500).json({ message: "Failed to send notifications" });
   }
 });
 

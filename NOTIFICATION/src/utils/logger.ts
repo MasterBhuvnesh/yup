@@ -8,4 +8,7 @@ const error = (...args: any[]) => {
   console.error("[ERROR]:", ...args);
 };
 
-export const logger = { log, error };
+const warn = (...args: any[]) => {
+  console.warn("[WARN]:", ...args);
+};
+export const logger = { log, error, warn };
