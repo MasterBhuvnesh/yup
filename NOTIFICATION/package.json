@@ -1,13 +1,13 @@
 {
-  "name": "expo-push-token-server",
+  "name": "yup",
   "version": "1.0.0",
-  "description": "A Node.js server to store and retrieve Expo push tokens using Firebase.",
+  "description": "A Node.js server for handling Expo push notifications using Firebase",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon",
     "build": "node scripts/build.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --pretty --noEmit",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint . --ext .ts",
