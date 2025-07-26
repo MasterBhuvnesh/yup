@@ -1,8 +1,9 @@
 import { Router, Request, Response } from 'express';
-import db from '@/config/firebase';
 import * as admin from 'firebase-admin';
-import { logger } from '@/utils/logger';
+
+import db from '@/config/firebase';
 import { authenticate } from '@/middleware/auth';
+import { logger } from '@/utils/logger';
 
 const router = Router();
 

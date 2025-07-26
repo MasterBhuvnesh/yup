@@ -1,6 +1,7 @@
-import * as admin from 'firebase-admin';
-import * as dotenv from 'dotenv';
 import * as path from 'path';
+
+import * as dotenv from 'dotenv';
+import * as admin from 'firebase-admin';
 
 // Load env variables
 dotenv.config();

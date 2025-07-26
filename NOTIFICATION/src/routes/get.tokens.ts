@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
+
 import db from '@/config/firebase';
-import { logger } from '@/utils/logger';
 import { authenticate } from '@/middleware/auth';
+import { logger } from '@/utils/logger';
 
 const router = Router();
 

@@ -1,6 +1,7 @@
-import { Router, Request, Response } from 'express';
-import db from '@/config/firebase';
 import axios from 'axios';
+import { Router, Request, Response } from 'express';
+
+import db from '@/config/firebase';
 import { authenticate } from '@/middleware/auth';
 import { logger } from '@/utils/logger';
 

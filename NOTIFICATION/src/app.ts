@@ -1,7 +1,8 @@
 import express from 'express';
-import registerTokenRoute from '@/routes/register.token';
+
 import getTokensRoute from '@/routes/get.tokens';
 import healthcheckRoute from '@/routes/healthcheck';
+import registerTokenRoute from '@/routes/register.token';
 import sendPushRoute from '@/routes/send.notification';
 // import { authenticate } from "@/middleware/auth";
 

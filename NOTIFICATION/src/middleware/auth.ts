@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { logger } from '@/utils/logger';
 import * as dotenv from 'dotenv';
+import { Request, Response, NextFunction } from 'express';
+
+import { logger } from '@/utils/logger';
 
 // Load .env variables
 dotenv.config();
