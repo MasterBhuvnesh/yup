@@ -4,7 +4,7 @@ import { logger } from "../utils/logger";
 
 export const startHeartbeatJob = () => {
   if (process.env.NODE_ENV !== "production") {
-    logger.log("⏱️ Skipping heartbeat cron: Not in production.");
+    logger.log("⏱️  - Skipping heartbeat cron: Not in production.");
     return;
   }
 
@@ -15,15 +15,15 @@ export const startHeartbeatJob = () => {
     return;
   }
 
-  logger.log("✅ Scheduling heartbeat job every 14 minutes");
+  logger.log("✅  Scheduling heartbeat job every 14 minutes");
 
   cron.schedule("*/14 * * * *", async () => {
     logger.log("🫀 Running heartbeat check...");
     try {
       const response = await axios.get(healthUrl);
-      logger.log(`✅ Healthcheck successful: ${response.status}`);
+      logger.log(`✅  Healthcheck successful: ${response.status}`);
     } catch (err: any) {
-      logger.error("❌ Healthcheck failed:", err.message);
+      logger.error("❌  Healthcheck failed:", err.message);
     }
   });
 };
