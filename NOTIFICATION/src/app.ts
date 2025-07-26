@@ -16,6 +16,8 @@ app.use(express.json());
 
 // Routes
 app.use("/", healthcheckRoute);
+
+//  We have direclty impelemented authentication middleware in the routes
 app.use("/", sendPushRoute);
 app.use("/", registerTokenRoute);
 app.use("/", getTokensRoute);

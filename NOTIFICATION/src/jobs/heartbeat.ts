@@ -1,5 +1,6 @@
 import cron from "node-cron";
 import axios from "axios";
+// Update the import path to a relative path based on your project structure
 import { logger } from "../utils/logger";
 
 export const startHeartbeatJob = () => {
@@ -15,15 +16,15 @@ export const startHeartbeatJob = () => {
     return;
   }
 
-  logger.log("✅  Scheduling heartbeat job every 14 minutes");
+  console.log("✅  Scheduling heartbeat job every 14 minutes");
 
   cron.schedule("*/14 * * * *", async () => {
-    logger.log("🫀 Running heartbeat check...");
+    console.log("🫀  - Running heartbeat check...");
     try {
       const response = await axios.get(healthUrl);
-      logger.log(`✅  Healthcheck successful: ${response.status}`);
+      console.log(`✅  - Healthcheck successful: ${response.status}`);
     } catch (err: any) {
-      logger.error("❌  Healthcheck failed:", err.message);
+      console.error("❌  - Healthcheck failed:", err.message);
     }
   });
 };
