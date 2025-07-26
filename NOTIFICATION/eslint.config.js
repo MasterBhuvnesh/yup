@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 const eslintPluginImport = require('eslint-plugin-import');
 const eslintPluginTS = require('@typescript-eslint/eslint-plugin');
 const parserTS = require('@typescript-eslint/parser');
@@ -45,4 +43,3 @@ module.exports = [
     },
   },
 ];
->>>>>>> 0ee7bd8fe74a6dd30c32e5a8f43ce8887918e227
