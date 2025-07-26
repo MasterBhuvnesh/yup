@@ -1,11 +1,23 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import * as admin from 'firebase-admin';
 
 import db from '@/config/firebase';
 import { authenticate } from '@/middleware/auth';
 import { logger } from '@/utils/logger';
+import { registerTokenSchema } from '@/validators/register.token.validator';
+import Joi from 'joi';
 
 const router = Router();
+
+const validate =
+  (schema: Joi.ObjectSchema) =>
+  (req: Request, res: Response, next: NextFunction) => {
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+    next();
+  };
 
 /**
  * @route   POST /register-token
@@ -15,12 +27,9 @@ const router = Router();
 router.post(
   '/register-token',
   authenticate,
+  validate(registerTokenSchema),
   async (req: Request, res: Response) => {
     const { token } = req.body;
-
-    if (!token) {
-      return res.status(400).json({ message: 'Token is required' });
-    }
 
     try {
       const tokenRef = db.collection('tokens').doc(token);

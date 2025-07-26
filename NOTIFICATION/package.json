@@ -26,6 +26,7 @@
     "dotenv": "^17.2.1",
     "express": "^4.17.1",
     "firebase-admin": "^10.3.0",
+    "joi": "^17.13.3",
     "node-cron": "^4.2.1"
   },
   "devDependencies": {
