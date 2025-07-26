@@ -1,8 +1,8 @@
-import { Router, Request, Response } from "express";
-import db from "../config/firebase";
-import * as admin from "firebase-admin";
-import { logger } from "../utils/logger";
-import { authenticate } from "../middleware/auth";
+import { Router, Request, Response } from 'express';
+import db from '@/config/firebase';
+import * as admin from 'firebase-admin';
+import { logger } from '@/utils/logger';
+import { authenticate } from '@/middleware/auth';
 
 const router = Router();
 
@@ -12,29 +12,29 @@ const router = Router();
  * @access  Public
  */
 router.post(
-  "/register-token",
+  '/register-token',
   authenticate,
   async (req: Request, res: Response) => {
     const { token } = req.body;
 
     if (!token) {
-      return res.status(400).json({ message: "Token is required" });
+      return res.status(400).json({ message: 'Token is required' });
     }
 
     try {
-      const tokenRef = db.collection("tokens").doc(token);
+      const tokenRef = db.collection('tokens').doc(token);
       await tokenRef.set({
         token: token,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
       logger.log(`Successfully stored token: ${token}`);
-      res.status(201).json({ message: "Token stored successfully" });
+      res.status(201).json({ message: 'Token stored successfully' });
     } catch (error) {
-      logger.error("Error storing token:", error);
-      res.status(500).json({ message: "Internal server error" });
+      logger.error('Error storing token:', error);
+      res.status(500).json({ message: 'Internal server error' });
     }
-  }
+  },
 );
 
 export default router;

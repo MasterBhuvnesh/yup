@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response } from 'express';
 
 const router = Router();
 
@@ -7,8 +7,8 @@ const router = Router();
  * @desc    Basic health check endpoint
  * @access  Public (no auth)
  */
-router.get("/healthcheck", (_req: Request, res: Response) => {
-  res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+router.get('/healthcheck', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 export default router;

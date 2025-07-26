@@ -1,6 +1,6 @@
-import * as dotenv from "dotenv";
-import app from "./app";
-import { startHeartbeatJob } from "./jobs/heartbeat";
+import * as dotenv from 'dotenv';
+import app from '@/app';
+import { startHeartbeatJob } from '@/jobs/heartbeat';
 
 // Load environment variables
 dotenv.config();

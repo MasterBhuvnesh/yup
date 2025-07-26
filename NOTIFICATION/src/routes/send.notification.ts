@@ -1,8 +1,8 @@
-import { Router, Request, Response } from "express";
-import db from "../config/firebase";
-import axios from "axios";
-import { authenticate } from "../middleware/auth";
-import { logger } from "../utils/logger";
+import { Router, Request, Response } from 'express';
+import db from '@/config/firebase';
+import axios from 'axios';
+import { authenticate } from '@/middleware/auth';
+import { logger } from '@/utils/logger';
 
 const router = Router();
 
@@ -11,11 +11,11 @@ const router = Router();
  * @desc    Send a push notification to all registered Expo tokens
  * @access  Protected
  */
-router.post("/send", authenticate, async (_req: Request, res: Response) => {
+router.post('/send', authenticate, async (_req: Request, res: Response) => {
   try {
-    const snapshot = await db.collection("tokens").get();
+    const snapshot = await db.collection('tokens').get();
     if (snapshot.empty) {
-      return res.status(200).json({ message: "No tokens to send." });
+      return res.status(200).json({ message: 'No tokens to send.' });
     }
 
     const tokens: string[] = [];
@@ -23,18 +23,18 @@ router.post("/send", authenticate, async (_req: Request, res: Response) => {
 
     const messages = tokens.map((token) => ({
       to: token,
-      title: "Machine Learning",
-      body: "Deep learning enables neural networks to learn patterns efficiently.",
+      title: 'Machine Learning',
+      body: 'Deep learning enables neural networks to learn patterns efficiently.',
     }));
 
     const response = await axios.post(
-      "https://exp.host/--/api/v2/push/send",
+      'https://exp.host/--/api/v2/push/send',
       messages,
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      }
+      },
     );
 
     type ExpoPushResponse = { data: any[] };
@@ -44,8 +44,8 @@ router.post("/send", authenticate, async (_req: Request, res: Response) => {
 
     results.forEach((result: any, index: number) => {
       if (
-        result.status === "error" &&
-        result.details?.error === "DeviceNotRegistered"
+        result.status === 'error' &&
+        result.details?.error === 'DeviceNotRegistered'
       ) {
         const invalidToken = tokens[index];
         invalidTokens.push(invalidToken);
@@ -54,7 +54,7 @@ router.post("/send", authenticate, async (_req: Request, res: Response) => {
 
     // Delete invalid tokens from Firestore
     const deleteOps = invalidTokens.map((token) =>
-      db.collection("tokens").doc(token).delete()
+      db.collection('tokens').doc(token).delete(),
     );
     await Promise.all(deleteOps);
 
@@ -70,8 +70,8 @@ router.post("/send", authenticate, async (_req: Request, res: Response) => {
       deleted: invalidTokens.length > 0 ? invalidTokens : undefined,
     });
   } catch (err: any) {
-    logger.error("❌ Failed to send notifications:", err.message);
-    res.status(500).json({ message: "Failed to send notifications" });
+    logger.error('❌ Failed to send notifications:', err.message);
+    res.status(500).json({ message: 'Failed to send notifications' });
   }
 });
 

@@ -15,7 +15,6 @@ This service is responsible for handling push notifications.
 ### Token Management
 
 - **POST /register-token**
-
   - **Description:** Registers a new Expo push token.
   - **Access:** Protected
   - **Request Body:** `{ "token": "..." }`

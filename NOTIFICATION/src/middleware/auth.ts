@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-import { logger } from "../utils/logger";
-import * as dotenv from "dotenv";
+import { Request, Response, NextFunction } from 'express';
+import { logger } from '@/utils/logger';
+import * as dotenv from 'dotenv';
 
 // Load .env variables
 dotenv.config();
@@ -14,23 +14,23 @@ const expectedToken = process.env.AUTH_TOKEN;
 export const authenticate = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res
       .status(401)
-      .json({ message: "Authorization header missing or malformed" });
+      .json({ message: 'Authorization header missing or malformed' });
   }
 
-  const token = authHeader.split(" ")[1];
+  const token = authHeader.split(' ')[1];
 
   if (token !== expectedToken) {
-    logger.error("Unauthorized access attempt with token:", token);
-    return res.status(403).json({ message: "Forbidden: Invalid token" });
+    logger.error('Unauthorized access attempt with token:', token);
+    return res.status(403).json({ message: 'Forbidden: Invalid token' });
   }
 
-  logger.log("Authenticated request with valid token");
+  logger.log('Authenticated request with valid token');
   next();
 };
