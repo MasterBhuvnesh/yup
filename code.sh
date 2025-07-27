@@ -84,5 +84,6 @@ git tag -a "v$VERSION" -m "Release version $VERSION"
 # 'git push origin HEAD' pushes the current branch's commits to the 'origin' remote.
 # '--tags' pushes all local tags to the remote.
 echo -e "${YELLOW}Pushing changes and tags to remote repository...${NC}"
-echo -e "${GREEN}Script finished successfully. Version v$VERSION released.${NC} All that remains is to push the changes to the remote repository."
+echo -e "${GREEN}Script finished successfully. Version v$VERSION released.${NC} "
+echo -e "${BLUE}All that remains is to push the changes to the remote repository.${NC}"
 echo -e "${YELLOW}Use 'git push origin HEAD --tags' to push the changes and tags.${NC}"
