@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*'  # only on version tags like v1.0.0
+    paths:
+      - 'NOTIFICATION/**'
   workflow_dispatch:
 
 jobs:
