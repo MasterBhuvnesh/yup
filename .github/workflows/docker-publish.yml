@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - 'v*'  # only run on version tags like v1.0.0 , v2.3.4, etc.
-    paths:
-      - 'NOTIFICATION/**'
   workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
