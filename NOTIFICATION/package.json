@@ -11,7 +11,10 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "validate": "eslint . --ext .ts && prettier --check .",
-    "validate:fix": "eslint . --ext .ts --fix && prettier --write ."
+    "validate:fix": "eslint . --ext .ts --fix && prettier --write .",
+     "do-release": "bash ../code.sh patch",
+    "do-release:minor": "bash ../code.sh minor",
+    "do-release:major": "bash ../code.sh major"
   },
   "type": "module",
   "keywords": [

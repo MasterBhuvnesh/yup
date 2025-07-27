@@ -39,3 +39,7 @@ This service is responsible for handling push notifications.
     - `200 OK`: `{ "message": "Notifications sent to X devices", "deleted": [ ... ] }`
     - `200 OK`: `{ "message": "No tokens to send." }`
     - `500 Internal Server Error`: `{ "message": "Failed to send notifications" }`
+
+
+> **Important:**  
+> Only run `bun do-release`, `bun do-release:minor`, or `bun do-release:major` when you want to build and deploy.
