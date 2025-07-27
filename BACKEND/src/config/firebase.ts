@@ -5,16 +5,18 @@ import * as admin from 'firebase-admin';
 
 // Load env variables
 dotenv.config();
+let serviceAccount: any;
 
-const serviceAccountPath = "../etc/secrets/key.json";
-
-if (!serviceAccountPath) {
-  console.error('SERVICE_ACCOUNT_KEY_PATH is not set in the .env file.');
+if (process.env.NODE_ENV === "development") {
+  const serviceAccountPath = "../etc/secrets/key.json";
+  const resolvedPath = path.resolve(__dirname, '..', serviceAccountPath);
+  serviceAccount = require(resolvedPath);
+} else if (process.env.NODE_ENV === "production") {
+  serviceAccount = require('/etc/secrets/key.json');
+} else {
+  console.error('NODE_ENV must be set to "development" or "production".');
   process.exit(1);
 }
-
-const resolvedPath = path.resolve(__dirname, '..', serviceAccountPath);
-const serviceAccount = require(resolvedPath);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
