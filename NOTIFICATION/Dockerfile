@@ -3,16 +3,9 @@
 # ===========================
 FROM oven/bun:1.1.13 AS base
 
-# Set the working directory inside the container
 WORKDIR /app
-
-# Copy all project files into the container
 COPY . .
-
-# Install dependencies using Bun with a frozen lockfile
 RUN bun install --frozen-lockfile
-
-# Optionally run type checking and linting
 RUN bun run validate:fix
 
 # ===========================
@@ -20,18 +13,11 @@ RUN bun run validate:fix
 # ===========================
 FROM oven/bun:1.1.13 AS prod
 
-# Set the working directory inside the container
 WORKDIR /app
-
-# Copy the application and dependencies from the base image
 COPY --from=base /app /app
-# Uncomment the following line if you need to copy environment variables
 # COPY .env .env
 
-# Expose the application's port
 EXPOSE 3000
-
-# Start the application
 CMD ["bun", "run", "start"]
 
 # ===========================
@@ -42,6 +28,42 @@ CMD ["bun", "run", "start"]
 
 # Run the Docker container:
 #   docker run -p 3000:3000 --env-file .env yup
+
+# List all Docker images:
+#   docker images
+
+# List all running containers:
+#   docker ps
+
+# List all containers (including stopped ones):
+#   docker ps -a
+
+# Remove all unused images, networks, and dangling build cache:
+#   docker system prune -a
+
+# For more aggressive cleanup (including volumes and all unused images):
+#   docker system prune -a --volumes
+
+# To stop a running container:
+#   docker stop <container_id>
+
+# Remove a specific Docker container:
+#   docker rm <container_id>
+
+# Remove all stopped containers:
+#   docker container prune
+
+# Remove a specific Docker image:
+#   docker rmi <image_id>
+
+# Remove all unused Docker images:
+#   docker image prune -a
+
+# Remove all stopped containers:
+#   docker container prune
+
+# Remove all unused volumes:
+#   docker volume prune
 
 # Stop all running containers:
 #   docker stop $(docker ps -q)

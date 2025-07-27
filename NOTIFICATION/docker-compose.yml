@@ -1,8 +1,11 @@
-version: "3.9"
+version: '3.8'
+
+name: YUP
 
 services:
   app:
     container_name: bun-server
+    image: verma2904/yup
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +16,13 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+    networks:
+      - yup_network
     restart: unless-stopped
+
+networks:
+  yup_network:
+    driver: bridge
 
     # To build and start the containers:
     # docker-compose up --build
