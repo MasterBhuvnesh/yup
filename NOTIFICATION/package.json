@@ -1,6 +1,6 @@
 {
   "name": "yup",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "A Bun server for handling Expo push notifications using Firebase",
   "main": "src/index.ts",
   "scripts": {
@@ -11,7 +11,11 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "validate": "eslint . --ext .ts && prettier --check .",
-    "validate:fix": "eslint . --ext .ts --fix && prettier --write ."
+    "validate:fix": "eslint . --ext .ts --fix && prettier --write .",
+    "version:patch": "npm version patch --no-git-tag-version && npm run version:commit",
+    "version:minor": "npm version minor --no-git-tag-version && npm run version:commit",
+    "version:major": "npm version major --no-git-tag-version && npm run version:commit",
+    "version:commit": "node ../scripts/version-commit.js"
   },
   "type": "module",
   "keywords": [
