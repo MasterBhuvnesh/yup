@@ -21,5 +21,4 @@ git commit -m "chore(notification): bump $VERSION_TYPE version"
 git push origin main
 
 # Push version tag
-VERSION=$(node -p "require('./notification/package.json').version")
-git push origin "v$VERSION"
+git push origin --tags
