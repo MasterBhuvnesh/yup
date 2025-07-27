@@ -3,9 +3,7 @@ name: Build, Tag, and Deploy Docker Image
 on:
   push:
     tags:
-      - 'v*'  # only on version tags like v1.0.0
-    branches:
-      - deploy  # changed from main to deploy
+      - 'v*'
 
 jobs:
   build:
