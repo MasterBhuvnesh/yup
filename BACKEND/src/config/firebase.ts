@@ -6,7 +6,7 @@ import * as admin from 'firebase-admin';
 // Load env variables
 dotenv.config();
 
-const serviceAccountPath = "../secrets/key.json";
+const serviceAccountPath = "../etc/secrets/key.json";
 
 if (!serviceAccountPath) {
   console.error('SERVICE_ACCOUNT_KEY_PATH is not set in the .env file.');

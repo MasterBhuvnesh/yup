@@ -8,11 +8,11 @@ import { logger } from '@/utils/logger';
 const router = Router();
 
 /**
- * @route   POST /send
+ * @route   GET /send
  * @desc    Send a push notification to all registered Expo tokens
  * @access  Protected
  */
-router.post('/send', authenticate, async (_req: Request, res: Response) => {
+router.get('/send', authenticate, async (_req: Request, res: Response) => {
   try {
     const snapshot = await db.collection('tokens').get();
     if (snapshot.empty) {

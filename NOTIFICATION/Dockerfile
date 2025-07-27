@@ -70,3 +70,8 @@ CMD ["bun", "run", "start"]
 
 # Remove all stopped containers:
 #   docker rm $(docker ps -a -q)
+
+# To upload the image to Docker Hub:
+#   docker login
+#   docker tag yup <your_dockerhub_username>/yup:latest
+#   docker push <your_dockerhub_username>/yup:latest

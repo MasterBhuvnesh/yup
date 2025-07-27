@@ -32,7 +32,7 @@ This service is responsible for handling push notifications.
 
 ### Notifications
 
-- **POST /send**
+- **GET /send**
   - **Description:** Sends a push notification to all registered devices.
   - **Access:** Protected
   - **Responses:**
