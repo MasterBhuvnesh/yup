@@ -10,4 +10,6 @@ router.post("/generate", handleGenerateArticle);
 // GET /api/v1/article/all
 router.get("/all", handleGetAllArticles);
 
+
+
 export default router;
