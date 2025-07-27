@@ -1,10 +1,6 @@
 {
   "name": "yup",
-<<<<<<< HEAD
-  "version": "3.3.0",
-=======
-  "version": "3.1.0",
->>>>>>> 0861fba69beef56f94312f85ae609c88350fd017
+  "version": "3.1.0", 
   "description": "A Bun server for handling Expo push notifications using Firebase",
   "main": "src/index.ts",
   "scripts": {
