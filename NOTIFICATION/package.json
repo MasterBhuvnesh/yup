@@ -1,6 +1,6 @@
 {
   "name": "yup",
-  "version": "3.0.20",
+  "version": "3.1.0",
   "description": "A Bun server for handling Expo push notifications using Firebase",
   "main": "src/index.ts",
   "scripts": {
@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "validate": "eslint . --ext .ts && prettier --check .",
     "validate:fix": "eslint . --ext .ts --fix && prettier --write .",
-     "do-release": "bash ../code.sh patch",
+    "do-release": "bash ../code.sh patch",
     "do-release:minor": "bash ../code.sh minor",
     "do-release:major": "bash ../code.sh major"
   },
