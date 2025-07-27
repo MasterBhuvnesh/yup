@@ -39,4 +39,4 @@ This service is responsible for generating article outlines and quizzes using th
   - **Responses:**
     - `200 OK`: Generated quiz data
     - `400 Bad Request`: `{ "error": "Document ID (docId) is required." }`
-    - `500 Internal Server Error**: `{ "error": "Failed to generate quiz.", "details": "..." }`
+    - `500 Internal Server Error`: `{ "error": "Failed to generate quiz.", "details": "..." }`
