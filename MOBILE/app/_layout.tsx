@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 
-import '@/styles/global.css';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
 import HomeHeader from '@/components/ui/HomeHeader';
+import '@/styles/global.css';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -38,6 +38,13 @@ export default function RootLayout() {
           name="index"
           options={{
             header: () => <HomeHeader />,
+          }}
+        />
+        <Stack.Screen
+          name="blog"
+          options={{
+            headerShown: false,
+            animation: 'fade',
           }}
         />
       </Stack>

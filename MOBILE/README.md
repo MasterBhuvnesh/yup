@@ -16,3 +16,4 @@
 
 - [ ] Update the architecture.
 
+- [ ] Add tags , Author , Date & etc in [id] page.

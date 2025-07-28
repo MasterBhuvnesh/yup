@@ -1,7 +1,7 @@
 import * as NavigationBar from 'expo-navigation-bar';
 import { Slot } from 'expo-router';
-import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 
 export default function Layout() {
   useEffect(() => {
