@@ -1,81 +1,90 @@
 #!/bin/bash
 
-# This script automates version bumping, Git tagging, and pushing to the remote repository.
-# It assumes this script is located in the project's root directory,
-# and the 'NOTIFICATION' directory is also directly within the root.
+# This script automates version bumping, Git tagging, and prepares changes for remote pushing.
+# It assumes the script and the 'NOTIFICATION' directory are both in the project's root.
 
 # Usage: ./code.sh [patch|minor|major]
-# Default: patch
+# Default bump type: patch
 
-# Define ANSI color codes for output
+# Define ANSI color codes for consistent output
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color - resets text to default
 
+# --- Confirmation Prompt ---
+# Warns the user and asks for confirmation before proceeding with sensitive operations.
+echo -e "${YELLOW}WARNING: This script performs version updates, Git tagging, and prepares changes for remote pushing.${NC}"
+read -p "Are you sure you want to proceed with deploying, redeploying, or staging your application? (y/N): " -n 1 -r
+echo # Add a newline after the prompt for cleaner output
+if [[ ! "$REPLY" =~ ^[yY]$ ]]; then
+    echo -e "${RED}Operation cancelled by user.${NC}"
+    exit 1
+fi
+# --- End Confirmation Prompt ---
 
 # Determine the version bump type.
-# If an argument is provided, use it; otherwise, default to 'patch'.
+# Uses the first argument provided, or defaults to 'patch' if no argument is given.
 VERSION_TYPE=${1:-patch}
 
 # Validate the provided version type.
+# Ensures the input is one of 'patch', 'minor', or 'major'.
 if [[ ! "$VERSION_TYPE" =~ ^(patch|minor|major)$ ]]; then
-  echo -e "${RED}Error: Invalid version type specified. Please use 'patch', 'minor', or 'major'.${NC}"
+  echo -e "${RED}Error: Invalid version type. Please use 'patch', 'minor', or 'major'.${NC}"
   exit 1
 fi
 
-# Get the directory of the script. Since it's in the root, this will be the root directory.
+# Get the script's directory, which is the project root.
 SCRIPT_DIR=$(dirname "$0")
-echo -e "${BLUE}DEBUG: Script is running from: $(pwd)${NC}" # Debug: show current working directory
-echo -e "${BLUE}DEBUG: SCRIPT_DIR (where code.sh is located) is: $SCRIPT_DIR${NC}" # Debug: show script's directory
+echo -e "${BLUE}DEBUG: Script is running from: $(pwd)${NC}" # Debug: Show current working directory
+echo -e "${BLUE}DEBUG: SCRIPT_DIR (script location) is: $SCRIPT_DIR${NC}" # Debug: Show script's directory
 
-# Define the path to the NOTIFICATION directory relative to the script's location (the root).
+# Define the path to the NOTIFICATION directory.
 NOTIFICATION_DIR="$SCRIPT_DIR/NOTIFICATION"
-echo -e "${BLUE}DEBUG: Target NOTIFICATION_DIR for cd is: $NOTIFICATION_DIR${NC}" # Debug: show target directory for cd
+echo -e "${BLUE}DEBUG: Target NOTIFICATION_DIR for cd is: $NOTIFICATION_DIR${NC}" # Debug: Show target directory for cd
 
-# Change to the NOTIFICATION directory to ensure npm commands run in the correct context.
-# Exit if navigation fails.
-cd "$NOTIFICATION_DIR" || { echo -e "${RED}Error: Could not navigate to $NOTIFICATION_DIR. Please ensure 'NOTIFICATION' directory exists as a sibling to 'code.sh'.${NC}"; exit 1; }
-echo -e "${BLUE}DEBUG: Successfully changed directory to: $(pwd)${NC}" # Debug: show current working directory after cd
+# Navigate to the NOTIFICATION directory.
+# This is crucial for `npm` commands to run in the correct context. Exits if navigation fails.
+cd "$NOTIFICATION_DIR" || { echo -e "${RED}Error: Could not navigate to $NOTIFICATION_DIR. Ensure 'NOTIFICATION' exists within the root.${NC}"; exit 1; }
+echo -e "${BLUE}DEBUG: Successfully changed directory to: $(pwd)${NC}" # Debug: Show current working directory after cd
 
-# Check if package.json exists in the NOTIFICATION directory.
+# Check for 'package.json' in the current (NOTIFICATION) directory.
+# A missing 'package.json' indicates an incorrect setup or directory.
 if [ ! -f "package.json" ]; then
   echo -e "${RED}Error: package.json not found in $(pwd)${NC}"
   exit 1
 fi
 
-# Upgrade the version of the package using npm version command with the specified type.
-# This command increments the specified version (patch, minor, or major)
-# and automatically commits the change to package.json and package-lock.json.
-# We use --no-git-tag-version to prevent npm from creating a git tag immediately,
-# as we will create our own annotated tag later.
-echo -e "${YELLOW}Version bumping ($VERSION_TYPE)...${NC}"
+# Bump the package version using npm.
+# Increments the version (patch, minor, or major) in `package.json` and `package-lock.json`.
+# `--no-git-tag-version` prevents `npm` from creating an automatic Git tag, as we'll create our own later.
+echo -e "${YELLOW}Bumping version ($VERSION_TYPE)...${NC}"
 npm version "$VERSION_TYPE" --no-git-tag-version
 
-# Get the updated version from package.json using 'jq'.
-# 'jq' is a lightweight and flexible command-line JSON processor.
-# If 'jq' is not installed, you might need to install it on your system (e.g., sudo apt-get install jq).
+# Retrieve the newly updated version from 'package.json'.
+# Uses `jq` to parse the JSON; ensure `jq` is installed on your system.
 echo -e "${YELLOW}Retrieving updated version from package.json...${NC}"
 VERSION=$(jq -r '.version' package.json)
 
-# Print the updated version to the console.
+# Display the updated version.
 echo -e "${GREEN}New version from package.json: $VERSION${NC}"
 
-# Add the modified package.json and package-lock.json (if present) to the Git staging area.
+# Stage 'package.json' and 'package-lock.json' for Git commit.
 echo -e "${YELLOW}Staging package.json changes...${NC}"
 git add package.json
 if [ -f "package-lock.json" ]; then
-  git add package-lock.json
+  git add package.lock.json
 fi
 
-# Commit, tag, and push instructions (do not run automatically)
+# Provide the user with the final Git commands for committing, tagging, and pushing.
+# These commands are displayed for manual execution to prevent accidental pushes.
 echo -e "${YELLOW}To commit, tag, and push your changes, run the following command:${NC}"
 echo -e "${GREEN}git commit -m \"Version updated to v$VERSION\" && git tag -a \"v$VERSION\" -m \"Release version $VERSION\" && git push origin HEAD --tags${NC}"
 
-#  ==========================================================
+#   ==========================================================
 # The following commands are for manual execution after the script runs.
-#  ==========================================================
+#   ==========================================================
 <<COMMENT
 # Commit the version bump.
 echo -e "${YELLOW}Committing version bump...${NC}"
