@@ -69,6 +69,14 @@ if [ -f "package-lock.json" ]; then
   git add package-lock.json
 fi
 
+# Commit, tag, and push instructions (do not run automatically)
+echo -e "${YELLOW}To commit, tag, and push your changes, run the following command:${NC}"
+echo -e "${GREEN}git commit -m \"Version updated to v$VERSION\" && git tag -a \"v$VERSION\" -m \"Release version $VERSION\" && git push origin HEAD --tags${NC}"
+
+#  ==========================================================
+# The following commands are for manual execution after the script runs.
+#  ==========================================================
+<<COMMENT
 # Commit the version bump.
 echo -e "${YELLOW}Committing version bump...${NC}"
 git commit -m "Version updated to v$VERSION"
@@ -87,3 +95,9 @@ echo -e "${YELLOW}Pushing changes and tags to remote repository...${NC}"
 echo -e "${GREEN}Script finished successfully. Version v$VERSION released.${NC} "
 echo -e "${BLUE}All that remains is to push the changes to the remote repository.${NC}"
 echo -e "${YELLOW}Use 'git push origin HEAD --tags' to push the changes and tags.${NC}"
+
+COMMENT
+# ==========================================================
+# Note: The actual push command is not executed in this script to avoid accidental pushes.
+# Users should review the changes and run the push command manually.
+# ==========================================================
