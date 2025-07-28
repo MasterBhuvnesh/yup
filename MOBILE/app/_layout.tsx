@@ -5,6 +5,8 @@ import { SplashScreen, Stack } from 'expo-router';
 
 import '@/styles/global.css';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import HomeHeader from '@/components/ui/HomeHeader';
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -23,15 +25,22 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar hidden />
       <Stack
         screenOptions={{
-          headerShown: false,
           animation: 'fade',
           contentStyle: {
             backgroundColor: 'transparent',
           },
         }}
-      />
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            header: () => <HomeHeader />,
+          }}
+        />
+      </Stack>
     </SafeAreaProvider>
   );
 }

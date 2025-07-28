@@ -1,8 +1,7 @@
 import { BLOGS } from '@/constants';
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { FlatList, Image, Pressable, View, Text } from 'react-native';
+import { FlatList, Image, Pressable, Text, View } from 'react-native';
 
 interface BlogCardProps {
   blog: (typeof BLOGS)[0];
@@ -34,7 +33,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, onPress }) => {
         >
           {blog.title}
         </Text>
-        <Text className="text-base font-geist-semibold text-neutral-600 mb-2">
+        <Text className="text-base font-geist text-neutral-800 mb-2">
           By {blog.author}
         </Text>
         <Text className="text-sm font-geist text-neutral-500 mb-4">
@@ -85,33 +84,11 @@ export default function BlogListingPage() {
     <BlogCard blog={item} onPress={() => handleBlogPress(item.id)} />
   );
 
-  const headercard = () => (
-    <View className="px-6 pt-16 pb-8 bg-neutral-100">
-      <Text className="text-4xl font-geist-bold text-neutral-900 mb-2">
-        Machine Learning
-      </Text>
-      <View className="flex-row items-start justify-between mb-4">
-        <Text className="text-md text-neutral-600 font-geist flex-1 mr-4">
-          Explore the latest insights, tutorials, and resources in machine
-          learning.
-        </Text>
-
-        <Ionicons
-          name="notifications"
-          size={24}
-          color="#0a7ea4"
-          className="animate-shake animate-twice"
-          onPress={() => console.log('Notifications pressed onpress')}
-        />
-      </View>
-    </View>
-  );
   return (
     <View className="flex-1 bg-neutral-100">
       <FlatList
         data={BLOGS}
         renderItem={renderBlogCard}
-        ListHeaderComponent={headercard}
         keyExtractor={item => item.id.toString()}
         className="px-4 pt-6"
         contentContainerStyle={{ paddingBottom: 20 }}

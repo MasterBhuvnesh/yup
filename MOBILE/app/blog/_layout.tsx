@@ -12,7 +12,7 @@ export default function Layout() {
   return (
     <>
       <StatusBar hidden />
-      <Slot />
+      <Slot screenOptions={{ headerShown: false }} />
     </>
   );
 }
