@@ -504,5 +504,52 @@
         }
       ]
     }
+  ],
+  [
+    {
+      "id": "1542107",
+      "title": "The Science of Rainbows: A Spectrum of Explanation",
+      "excerpt": "Rainbows, those breathtaking arcs of color, are more than just a pretty sight.  They're a captivating demonstration of physics and optics, revealing the fascinating interplay of light, water, and atmospheric conditions. This article delves into the science behind rainbows, explaining their formation and the variations we observe.",
+      "content": "Rainbows, those mesmerizing arcs of color appearing in the sky after a rain shower, have captivated humanity for centuries.  More than just a beautiful phenomenon, rainbows are a testament to the fundamental principles of optics and the behavior of light. This exploration will unveil the scientific processes behind their creation, from the initial sunlight to the final spectrum of colors witnessed by the observer.",
+      "author": "Dr. Evelyn Reed",
+      "date": "2025-07-21",
+      "imageUrl": "https://source.unsplash.com/1600x900/?rainbow",
+      "tags": [
+        "rainbow",
+        "physics",
+        "optics",
+        "light",
+        "meteorology",
+        "science"
+      ],
+      "sections": [
+        {
+          "title": "The Formation of a Rainbow: Refraction and Reflection",
+          "content": [
+            "Sunlight's composition: white light is actually a mixture of all the colors of the spectrum.",
+            "Refraction of light through raindrops: How the speed of light changes as it enters and exits a water droplet, causing it to bend.",
+            "Internal reflection within the raindrop:  The light reflects off the back of the raindrop before exiting.",
+            "Dispersion of light:  Different wavelengths of light (colors) refract at slightly different angles, separating the colors."
+          ]
+        },
+        {
+          "title": "Rainbow Variations and Atmospheric Conditions",
+          "content": [
+            "Double rainbows: The formation of a secondary rainbow with reversed color order due to a second internal reflection.",
+            "Rainbow size and intensity: The influence of raindrop size and the amount of sunlight on the appearance of a rainbow.",
+            "The observer's position and perspective: The importance of the angle of observation in seeing a rainbow.",
+            "Fogbows:  A similar phenomenon formed by the diffraction of light in fog or mist.",
+            "Circumhorizontal arcs:  Rare and spectacular rainbow-like arcs formed by refraction of light in ice crystals high in the atmosphere."
+          ]
+        },
+        {
+          "title": "Rainbows in Culture and Mythology",
+          "content": [
+            "Rainbows throughout history:  Their presence in various cultures' mythologies, art, and folklore.",
+            "The symbolic meaning of rainbows:  Hope, peace, and transformation."
+          ]
+        }
+      ]
+    }
   ]
 ]
