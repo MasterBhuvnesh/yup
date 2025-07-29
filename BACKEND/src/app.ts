@@ -25,11 +25,11 @@ app.get('/health-check', (req, res) => {
 
 // --- API Routes ---
 // All article-related routes will be prefixed with /api/v1/article
-app.use('/api/v1/article', articleRoutes);
+app.use('/', articleRoutes);
 
 // All quiz-related routes will be prefixed with /api/v1/quiz
 
-app.use('/api/v1/quiz', quizRoutes);
+app.use('/', quizRoutes);
 
 // --- Cron Job for Health Check ---
 // This job runs every minute to ping the health-check endpoint.
