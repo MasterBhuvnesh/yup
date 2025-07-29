@@ -10,7 +10,9 @@
     "lint": "expo lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint:fix": "expo lint --fix"
+    "lint:fix": "expo lint --fix",
+    "validate": "expo lint && prettier --check .",
+    "validate:fix": "expo lint --fix && prettier --write ."
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
