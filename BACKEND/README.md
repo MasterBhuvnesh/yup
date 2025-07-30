@@ -14,7 +14,7 @@ This service is responsible for generating article outlines and quizzes using th
 
 ### Article Management
 
-- **POST /api/v1/article/generate**
+- **POST /generate**
   - **Description:** Generates an article outline for a given topic using Gemini AI.
   - **Access:** Public
   - **Request Body:** `{ "topic": "string" }`
@@ -23,7 +23,7 @@ This service is responsible for generating article outlines and quizzes using th
     - `400 Bad Request`: `{ "error": "A non-empty "topic" string is required in the request body." }`
     - `500 Internal Server Error`: `{ "error": "An internal server error occurred while generating the article." }`
 
-- **GET /api/v1/article/all**
+- **GET /all**
   - **Description:** Retrieves all stored articles from Firestore.
   - **Access:** Public
   - **Responses:**
@@ -32,7 +32,7 @@ This service is responsible for generating article outlines and quizzes using th
 
 ### Quiz Management
 
-- **POST /api/v1/quiz/generate**
+- **POST /quiz**
   - **Description:** Generates a quiz from an existing article using its document ID.
   - **Access:** Public
   - **Request Body:** `{ "docId": "string" }`

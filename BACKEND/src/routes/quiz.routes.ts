@@ -4,7 +4,7 @@ import { handleGenerateQuiz } from "../controllers/quiz.controller";
 const router = Router();
 
 
-// POST /api/v1/quiz/generate
-router.post("/generate", handleGenerateQuiz);
+// POST /quiz
+router.post("/quiz", handleGenerateQuiz);
 
 export default router;
