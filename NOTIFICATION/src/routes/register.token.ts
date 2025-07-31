@@ -1,20 +1,23 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import * as admin from 'firebase-admin';
 import Joi from 'joi';
 
-import db from '@/config/firebase';
 import { authenticate } from '@/middleware/auth';
+import { TokenService } from '@/services/token.service';
+import { ValidationError } from '@/utils/errors/custom-errors';
+import { asyncHandler } from '@/utils/errors/error-handler';
 import { logger } from '@/utils/logger';
+import { ApiResponse } from '@/utils/responses/api-response';
 import { registerTokenSchema } from '@/validators/register.token.validator';
 
 const router = Router();
+const tokenService = new TokenService();
 
 const validate =
   (schema: Joi.ObjectSchema) =>
   (req: Request, res: Response, next: NextFunction) => {
     const { error } = schema.validate(req.body);
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      throw new ValidationError(error.details[0].message);
     }
     next();
   };
@@ -22,29 +25,31 @@ const validate =
 /**
  * @route   POST /register-token
  * @desc    Register an Expo push token
- * @access  Public
+ * @access  Private (requires authentication)
+ * @param   {string} token - The Expo push token to register
+ * @returns {ApiResponseFormat} Success response with registration confirmation
+ * @throws  {ValidationError} When token format is invalid
+ * @throws  {DatabaseError} When database operation fails
  */
 router.post(
   '/register-token',
   authenticate,
   validate(registerTokenSchema),
-  async (req: Request, res: Response) => {
+  asyncHandler(async (req: Request, res: Response) => {
     const { token } = req.body;
 
-    try {
-      const tokenRef = db.collection('tokens').doc(token);
-      await tokenRef.set({
-        token: token,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
-
-      logger.log(`Successfully stored token: ${token}`);
-      res.status(201).json({ message: 'Token stored successfully' });
-    } catch (error) {
-      logger.error('Error storing token:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  },
+    logger.log(`Attempting to register token: ${token}`);
+    
+    const registeredToken = await tokenService.registerToken({ token });
+    
+    const response = ApiResponse.success(
+      { token: registeredToken.token },
+      'Token stored successfully',
+      201
+    );
+    
+    res.status(201).json(response);
+  }),
 );
 
 export default router;
