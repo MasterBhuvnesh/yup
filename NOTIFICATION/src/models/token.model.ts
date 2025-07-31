@@ -6,7 +6,7 @@ export interface Token {
   /** The Expo push token string */
   token: string;
   /** Timestamp when the token was created */
-  createdAt: Date | FirebaseFirestore.Timestamp;
+  createdAt: Date;
 }
 
 export interface CreateTokenRequest {

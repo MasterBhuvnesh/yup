@@ -1,44 +1,47 @@
-import { TokenService } from '../services/token.service';
-import { ValidationError } from '../utils/errors/custom-errors';
+import { beforeEach, describe, expect, it, mock } from 'bun:test';
 
-// Mock the repository
-jest.mock('../repositories/token.repository');
+import { TokenService } from '../services/token.service';
+
+// Mock the repository using Bun's mock function
+const mockRepository = {
+  createToken: mock(),
+  getAllTokens: mock(),
+  tokenExists: mock(),
+};
 
 describe('TokenService', () => {
   let tokenService: TokenService;
-  let mockRepository: any;
 
   beforeEach(() => {
     // Reset mocks
-    jest.clearAllMocks();
-    
-    // Create mock repository
-    mockRepository = {
-      createToken: jest.fn(),
-      getAllTokens: jest.fn(),
-      tokenExists: jest.fn(),
-    };
+    mockRepository.createToken.mockClear();
+    mockRepository.getAllTokens.mockClear();
+    mockRepository.tokenExists.mockClear();
     
     tokenService = new TokenService(mockRepository);
   });
 
   describe('validateTokenData', () => {
     it('should throw ValidationError for missing token data', () => {
-      expect(() => tokenService.validateTokenData(null as any)).toThrow(ValidationError);
-      expect(() => tokenService.validateTokenData(undefined as any)).toThrow(ValidationError);
+      expect(() => tokenService.validateTokenData(null as any)).toThrow('Token data is required');
+      expect(() => tokenService.validateTokenData(undefined as any)).toThrow('Token data is required');
     });
 
     it('should throw ValidationError for missing token', () => {
-      expect(() => tokenService.validateTokenData({} as any)).toThrow(ValidationError);
-      expect(() => tokenService.validateTokenData({ token: '' })).toThrow(ValidationError);
+      expect(() => tokenService.validateTokenData({} as any)).toThrow('Token is required');
+      expect(() => tokenService.validateTokenData({ token: '' })).toThrow('Token is required');
+    });
+
+    it('should throw ValidationError for empty token', () => {
+      expect(() => tokenService.validateTokenData({ token: '   ' })).toThrow('Token cannot be empty');
     });
 
     it('should throw ValidationError for invalid token type', () => {
-      expect(() => tokenService.validateTokenData({ token: 123 } as any)).toThrow(ValidationError);
+      expect(() => tokenService.validateTokenData({ token: 123 } as any)).toThrow('Token must be a string');
     });
 
     it('should throw ValidationError for invalid Expo token format', () => {
-      expect(() => tokenService.validateTokenData({ token: 'invalid-token' })).toThrow(ValidationError);
+      expect(() => tokenService.validateTokenData({ token: 'invalid-token' })).toThrow('Invalid Expo token format');
     });
 
     it('should pass validation for valid Expo token', () => {

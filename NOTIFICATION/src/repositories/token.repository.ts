@@ -1,7 +1,5 @@
-import * as admin from 'firebase-admin';
-
-import db from '@/config/firebase';
-import { Token, CreateTokenRequest, TokenDocument } from '@/models/token.model';
+import { db } from '@/config/firebase';
+import { CreateTokenRequest, Token } from '@/models/token.model';
 import { DatabaseError } from '@/utils/errors/custom-errors';
 import { logger } from '@/utils/logger';
 
@@ -21,19 +19,26 @@ export class TokenRepository implements ITokenRepository {
    */
   async createToken(tokenData: CreateTokenRequest): Promise<Token> {
     try {
-      const tokenDoc: TokenDocument = {
+      logger.log('Starting createToken with data:', tokenData);
+      
+      const now = new Date();
+      const tokenDoc = {
         token: tokenData.token,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        createdAt: now,
       };
 
-      const tokenRef = this.collection.doc(tokenData.token);
-      await tokenRef.set(tokenDoc);
+      logger.log('Created token document:', tokenDoc);
 
+      const tokenRef = this.collection.doc(tokenData.token);
+      logger.log('About to save to Firestore...');
+      
+      await tokenRef.set(tokenDoc);
+      
       logger.log(`Token stored successfully: ${tokenData.token}`);
 
       return {
         token: tokenData.token,
-        createdAt: new Date(),
+        createdAt: now,
       };
     } catch (error) {
       logger.error('Error storing token:', error);
