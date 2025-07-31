@@ -39,15 +39,15 @@ router.post(
     const { token } = req.body;
 
     logger.log(`Attempting to register token: ${token}`);
-    
+
     const registeredToken = await tokenService.registerToken({ token });
-    
+
     const response = ApiResponse.success(
       { token: registeredToken.token },
       'Token stored successfully',
-      201
+      201,
     );
-    
+
     res.status(201).json(response);
   }),
 );

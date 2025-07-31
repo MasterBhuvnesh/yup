@@ -21,15 +21,15 @@ router.get(
   authenticate,
   asyncHandler(async (_req: Request, res: Response) => {
     logger.log('Retrieving all tokens');
-    
+
     const tokens = await tokenService.getAllTokens();
-    
+
     const response = ApiResponse.success(
       tokens,
       `Retrieved ${tokens.length} tokens`,
-      200
+      200,
     );
-    
+
     res.status(200).json(response);
   }),
 );

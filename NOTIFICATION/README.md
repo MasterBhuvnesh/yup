@@ -44,4 +44,5 @@ This service manages push notifications.
 > Use `bun do-release`, `bun do-release:minor`, or `bun do-release:major` only when you are ready to build and deploy.
 
 ## To Do
-- [ ] Define architecture & enhance security for the get tokens endpoint
+- [ ] Fix all eslint warn | issue | error.
+- [ ] Modify the pipeline for docker build setup a testcases to be check of notification folder.

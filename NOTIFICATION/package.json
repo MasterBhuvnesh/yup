@@ -12,9 +12,9 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "validate": "eslint . --ext .ts && prettier --check .",
     "validate:fix": "eslint . --ext .ts --fix && prettier --write .",
-      "test": "bun test",
-  "test:watch": "bun test --watch",
-  "test:coverage": "bun test --coverage",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "test:coverage": "bun test --coverage",
     "do-release": "bash ../code.sh patch",
     "do-release:minor": "bash ../code.sh minor",
     "do-release:major": "bash ../code.sh major"

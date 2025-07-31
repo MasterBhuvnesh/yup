@@ -20,7 +20,7 @@ export class TokenRepository implements ITokenRepository {
   async createToken(tokenData: CreateTokenRequest): Promise<Token> {
     try {
       logger.log('Starting createToken with data:', tokenData);
-      
+
       const now = new Date();
       const tokenDoc = {
         token: tokenData.token,
@@ -31,9 +31,9 @@ export class TokenRepository implements ITokenRepository {
 
       const tokenRef = this.collection.doc(tokenData.token);
       logger.log('About to save to Firestore...');
-      
+
       await tokenRef.set(tokenDoc);
-      
+
       logger.log(`Token stored successfully: ${tokenData.token}`);
 
       return {
@@ -54,7 +54,7 @@ export class TokenRepository implements ITokenRepository {
   async getAllTokens(): Promise<string[]> {
     try {
       const tokensSnapshot = await this.collection.get();
-      
+
       if (tokensSnapshot.empty) {
         return [];
       }

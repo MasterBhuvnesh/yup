@@ -1,8 +1,6 @@
-
 import { Request, Response, NextFunction } from 'express';
 
 import { logger } from '@/utils/logger';
-
 
 const expectedToken = process.env.AUTH_TOKEN;
 

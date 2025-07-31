@@ -14,7 +14,11 @@ export class ApiResponse {
   /**
    * Create a successful response
    */
-  static success<T>(data: T, message: string = 'Success', statusCode: number = 200): ApiResponseFormat<T> {
+  static success<T>(
+    data: T,
+    message: string = 'Success',
+    statusCode: number = 200,
+  ): ApiResponseFormat<T> {
     return {
       success: true,
       message,

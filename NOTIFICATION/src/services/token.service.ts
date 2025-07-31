@@ -10,7 +10,9 @@ import { ITokenService } from './interfaces/token.service.interface';
  * Token service implementation for business logic
  */
 export class TokenService implements ITokenService {
-  constructor(private readonly tokenRepository: ITokenRepository = new TokenRepository()) {}
+  constructor(
+    private readonly tokenRepository: ITokenRepository = new TokenRepository(),
+  ) {}
 
   /**
    * Register a new token
@@ -38,7 +40,7 @@ export class TokenService implements ITokenService {
     // Create new token
     const token = await this.tokenRepository.createToken(tokenData);
     logger.log(`Successfully registered new token: ${tokenData.token}`);
-    
+
     return token;
   }
 

@@ -1,6 +1,8 @@
 // bun.d.ts - Type declarations for Bun runtime
 declare module 'bun:test' {
-  export interface MockFunction<T extends (...args: any[]) => any = (...args: any[]) => any> {
+  export interface MockFunction<
+    T extends (...args: any[]) => any = (...args: any[]) => any,
+  > {
     (...args: Parameters<T>): ReturnType<T>;
     mockClear(): void;
     mockReset(): void;
@@ -83,22 +85,34 @@ declare module 'bun:test' {
   export function describe(name: string, fn: () => void): void;
   export function describe(name: string, fn: () => Promise<void>): void;
 
-  export function it(name: string, fn: (ctx: TestContext) => void | Promise<void>): void;
+  export function it(
+    name: string,
+    fn: (ctx: TestContext) => void | Promise<void>,
+  ): void;
   export function it(name: string, fn: () => void | Promise<void>): void;
 
-  export function test(name: string, fn: (ctx: TestContext) => void | Promise<void>): void;
+  export function test(
+    name: string,
+    fn: (ctx: TestContext) => void | Promise<void>,
+  ): void;
   export function test(name: string, fn: () => void | Promise<void>): void;
 
-  export function beforeEach(fn: (ctx: BeforeEachContext) => void | Promise<void>): void;
+  export function beforeEach(
+    fn: (ctx: BeforeEachContext) => void | Promise<void>,
+  ): void;
   export function beforeEach(fn: () => void | Promise<void>): void;
 
-  export function afterEach(fn: (ctx: AfterEachContext) => void | Promise<void>): void;
+  export function afterEach(
+    fn: (ctx: AfterEachContext) => void | Promise<void>,
+  ): void;
   export function afterEach(fn: () => void | Promise<void>): void;
 
   export function beforeAll(fn: () => void | Promise<void>): void;
   export function afterAll(fn: () => void | Promise<void>): void;
 
-  export function mock<T extends (...args: any[]) => any = (...args: any[]) => any>(): MockFunction<T>;
+  export function mock<
+    T extends (...args: any[]) => any = (...args: any[]) => any,
+  >(): MockFunction<T>;
 
   // Aliases
   export { describe as suite, it as test };
