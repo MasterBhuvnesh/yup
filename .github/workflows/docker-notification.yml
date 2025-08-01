@@ -1,9 +1,9 @@
-name: Build, Tag, and Deploy Docker Image
+name: Build, Tag, and Deploy Docker Image - Notification
 
 on:
   push:
     tags:
-      - 'v*'
+      - 'notification-v*'
 
 jobs:
   build:
@@ -16,8 +16,8 @@ jobs:
       - name: Extract version or commit hash
         id: version
         run: |
-          if [[ $GITHUB_REF == refs/tags/v* ]]; then
-            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          if [[ $GITHUB_REF == refs/tags/notification-v* ]]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/notification-v}" >> $GITHUB_OUTPUT
           else
             echo "VERSION=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
           fi

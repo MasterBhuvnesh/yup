@@ -1,0 +1,25 @@
+# Testing GitHub Actions Workflow for Docker Backend Deployment
+name: Build, Tag, and Deploy Docker Image - Backend
+
+on:
+  push:
+    tags:
+      - 'backend-v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version or commit hash
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/backend-v* ]]; then
+            echo "VERSION=${GITHUB_REF#refs/tags/backend-v}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+          fi
+
