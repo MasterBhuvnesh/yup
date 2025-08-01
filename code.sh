@@ -79,7 +79,10 @@ echo -e "${GREEN}New version for '${SERVICE_NAME}' is: $VERSION${NC}"
 
 # Stage 'package.json' and 'package-lock.json' for Git commit.
 echo -e "${YELLOW}Staging package.json and package-lock.json...${NC}"
-git add package.json package-lock.json
+git add package.json 
+if [ -f "package-lock.json" ]; then
+  git add package-lock.json
+fi
 
 # Provide the user with the final Git commands for committing, tagging, and pushing.
 echo -e "\n${YELLOW}✅ All set! To complete the release, run the following command:${NC}"
