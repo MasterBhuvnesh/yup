@@ -34,7 +34,7 @@ app.use('/', quizRoutes);
 // --- Cron Job for Health Check ---
 // This job runs every minute to ping the health-check endpoint.
 // It dynamically uses the correct URL for development or production.
-cron.schedule('14 * * * *', () => {
+cron.schedule('*/14 * * * *', () => {
   const now = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
   console.log(`[CRON] Running health check at: ${now}`);
   console.log(`[CRON] Pinging URL: ${config.healthCheckUrl}`); // Log the URL being used
