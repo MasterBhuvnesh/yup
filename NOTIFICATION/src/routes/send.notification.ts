@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 import db from '@/config/firebase';
 import { authenticate } from '@/middleware/auth';
+import { notificationRateLimit } from '@/middleware/rate-limit';
 import { logger } from '@/utils/logger';
 
 const router = Router();
@@ -12,7 +13,7 @@ const router = Router();
  * @desc    Send a push notification to all registered Expo tokens
  * @access  Protected
  */
-router.get('/send', authenticate, async (_req: Request, res: Response) => {
+router.get('/send', notificationRateLimit, authenticate, async (_req: Request, res: Response) => {
   try {
     const snapshot = await db.collection('tokens').get();
     if (snapshot.empty) {

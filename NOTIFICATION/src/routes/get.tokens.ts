@@ -1,6 +1,7 @@
-import { Router, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 import { authenticate } from '@/middleware/auth';
+import { strictRateLimit } from '@/middleware/rate-limit';
 import { TokenService } from '@/services/token.service';
 import { asyncHandler } from '@/utils/errors/error-handler';
 import { logger } from '@/utils/logger';
@@ -18,6 +19,7 @@ const tokenService = new TokenService();
  */
 router.get(
   '/get-tokens',
+  strictRateLimit,
   authenticate,
   asyncHandler(async (_req: Request, res: Response) => {
     logger.log('Retrieving all tokens');

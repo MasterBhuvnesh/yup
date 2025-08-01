@@ -1,5 +1,6 @@
 import express from 'express';
 
+import { generalRateLimit } from '@/middleware/rate-limit';
 import getTokensRoute from '@/routes/get.tokens';
 import healthcheckRoute from '@/routes/healthcheck';
 import registerTokenRoute from '@/routes/register.token';
@@ -12,6 +13,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(generalRateLimit);
 
 // 🔒 Apply auth globally — all routes below this will require Bearer token
 // app.use(authenticate);

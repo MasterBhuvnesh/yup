@@ -1,7 +1,8 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import Joi from 'joi';
 
 import { authenticate } from '@/middleware/auth';
+import { tokenRegisterRateLimit } from '@/middleware/rate-limit';
 import { TokenService } from '@/services/token.service';
 import { ValidationError } from '@/utils/errors/custom-errors';
 import { asyncHandler } from '@/utils/errors/error-handler';
@@ -33,6 +34,7 @@ const validate =
  */
 router.post(
   '/register-token',
+  tokenRegisterRateLimit,
   authenticate,
   validate(registerTokenSchema),
   asyncHandler(async (req: Request, res: Response) => {
