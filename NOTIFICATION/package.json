@@ -15,9 +15,9 @@
     "test": "bun test",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
-    "do-release": "bash ../SCRIPTS/code.sh notification patch",
-    "do-release:minor": "bash ../SCRIPTS/code.sh notification minor",
-    "do-release:major": "bash ../SCRIPTS/code.sh notification major"
+    "do-release": "bash ../code.sh notification patch",
+    "do-release:minor": "bash ../code.sh notification minor",
+    "do-release:major": "bash ../code.sh notification major"
   },
   "type": "module",
   "keywords": [
