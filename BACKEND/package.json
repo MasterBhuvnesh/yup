@@ -1,12 +1,13 @@
 {
   "name": "yup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A production-level API to generate article outlines using the Gemini API.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "release": "bash ../code.sh backend patch"
   },
   "keywords": [
     "typescript",
