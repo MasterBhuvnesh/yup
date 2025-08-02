@@ -1,5 +1,5 @@
 import * as path from 'path';
-
+import { getAppCheck } from 'firebase-admin/app-check';
 import * as dotenv from 'dotenv';
 import * as admin from 'firebase-admin';
 
@@ -25,3 +25,4 @@ admin.initializeApp({
 const db = admin.firestore();
 
 export default db;
+export const appCheck = getAppCheck();
