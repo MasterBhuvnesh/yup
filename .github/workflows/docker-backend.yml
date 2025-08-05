@@ -5,6 +5,9 @@ on:
   push:
     tags:
       - 'backend-v*'
+    # Uncomment the following lines when we want to trigger on branch pushes as well
+    # branches: 
+    #   - 'production'
 
 jobs:
   build:
