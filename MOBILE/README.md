@@ -1,19 +1,21 @@
 # Feature Checklist
 
 - [ ] Add a bottom sheet for notifications:
-  - [ ] Include a switch to turn notifications on/off.
-  - [ ] Display two cards showing today's and yesterday's topics and their arrival times.
+  - [ ] Include a switch to enable or disable notifications.
+  - [ ] Display two cards showing today's and yesterday's topics along with their arrival times.
 
-- [ ] Add buttons (`Quiz`, `Share`, `PDF`) at the end of a specific page.
+- [ ] Add `Quiz`, `Share`, and `PDF` buttons at the end of a specific page.
 
 - [ ] Implement PDF functionality:
-  - [ ] Ensure content fits properly in HTML before generating PDF.
+  - [ ] Ensure content is properly formatted in HTML before generating the PDF.
 
-- [ ] Enhance sharing:
-  - [ ] Use website link and reference the specific page.
+- [ ] Enhance sharing functionality:
+  - [ ] Use the website link and reference the specific page.
 
 - [ ] Add support for code and image content.
 
-- [ ] Update the architecture.
+- [ ] Update the application architecture.
 
-- [ ] Add tags , Author , Date & etc in [id] page.
+- [ ] Add tags, author, date, and other metadata to the `[id]` page.
+
+- [ ] Update notifications, EAS CLI setup, OTA updates, and EAS workflow.

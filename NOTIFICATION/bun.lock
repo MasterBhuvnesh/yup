@@ -9,6 +9,7 @@
         "express-rate-limit": "^8.0.1",
         "firebase-admin": "^13.4.0",
         "joi": "^17.13.3",
+        "logrocket": "^10.1.0",
         "node-cron": "^4.2.1",
       },
       "devDependencies": {
@@ -599,6 +600,8 @@
     "lodash.merge": ["lodash.merge@4.6.2", "", {}, "sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ=="],
 
     "lodash.once": ["lodash.once@4.1.1", "", {}, "sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg=="],
+
+    "logrocket": ["logrocket@10.1.0", "", {}, "sha512-wcVb+fkM7V6+nhUkhpTdnY/b31C5xy0hlEEs8UOMZiHFUrv0/2kIV+NjtmOlksniIQmUawC5ozw6ZID4qbJmUg=="],
 
     "long": ["long@5.3.2", "", {}, "sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA=="],
 
