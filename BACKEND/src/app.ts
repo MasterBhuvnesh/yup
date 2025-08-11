@@ -4,6 +4,7 @@ import cron from 'node-cron';
 import articleRoutes from './routes/article.routes';
 import { config } from './config';
 import quizRoutes from './routes/quiz.routes';
+import summaryRoutes from './routes/summary.routes';
 
 
 // Create the Express application instance
@@ -30,6 +31,9 @@ app.use('/', articleRoutes);
 // All quiz-related routes will be prefixed with /api/v1/quiz
 
 app.use('/', quizRoutes);
+// All summary-related routes will be prefixed with /api/v1/summary
+app.use('/',summaryRoutes);
+
 
 // --- Cron Job for Health Check ---
 // This job runs every minute to ping the health-check endpoint.
