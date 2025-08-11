@@ -3,6 +3,9 @@ import { genAI } from '../config';
 // Define the prompt template as a constant for clarity and reusability
 const PROMPT_TEMPLATE = `
 You are a specialized AI content generator. Your task is to take a given topic or title and generate a detailed, comprehensive article outline in a specific JSON format.
+
+**A crucial part of your task is to include a dedicated 'Practical Example' section containing a relevant code snippet if the topic is technical, scientific, or programmatic (like programming, data science, statistics, etc.). This section is mandatory for such topics. The code should be provided as a single JSON string, with newlines represented by '\\n'.**
+
 **IMPORTANT**: You MUST output ONLY the raw JSON object. Do not include any other text, explanations, or markdown formatting like \`\`\`json ... \`\`\`.
 Here is the JSON structure to follow:
 [
@@ -17,6 +20,13 @@ Here is the JSON structure to follow:
     "tags": ["<tag1>", "<tag2>", "<tag3>", "<tag4>", "<tag5>", "<tag6>"],
     "sections": [
       {"title": "<Title of the first section>", "content": ["<Point 1>", "<Point 2>"]},
+      {
+        "title": "Practical Example: <A descriptive title for the code>",
+        "content": [
+          "<A brief 1-2 sentence explanation of the code's purpose.>",
+          "<The complete, well-formatted code block as a single string. Use \\n for newlines.>"
+        ]
+      },
       {"title": "<Title of the second section>", "content": ["<Point 1>", "<Point 2>"]}
     ]
   }
