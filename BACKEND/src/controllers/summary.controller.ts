@@ -3,7 +3,7 @@ import generateSummary from '../services/summary.service';
 
 export const createSummary = async (req: Request, res: Response) => {
     try {
-        const { docId } = req.params;
+        const { docId } = req.body;
         if (!docId) {
             return res.status(400).json({ error: 'Document ID is required.' });
         }

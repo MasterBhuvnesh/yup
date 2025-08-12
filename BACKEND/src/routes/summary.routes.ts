@@ -5,6 +5,6 @@ const router = Router();
 
 
 // POST /summary
-router.post('/articles/:docId/summary', createSummary);
+router.post('/summary', createSummary);
 
 export default router;
