@@ -5,6 +5,7 @@ import articleRoutes from './routes/article.routes';
 import { config } from './config';
 import quizRoutes from './routes/quiz.routes';
 import summaryRoutes from './routes/summary.routes';
+import factsRoutes from './routes/facts.routes';
 
 
 // Create the Express application instance
@@ -33,6 +34,8 @@ app.use('/', articleRoutes);
 app.use('/', quizRoutes);
 // All summary-related routes will be prefixed with /api/v1/summary
 app.use('/',summaryRoutes);
+//All facts-related routes will be prefixed with /api/v1/facts
+app.use('/', factsRoutes);
 
 
 // --- Cron Job for Health Check ---
