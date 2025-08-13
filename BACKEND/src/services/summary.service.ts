@@ -1,6 +1,7 @@
 import { genAI } from '../config';
 import db from '../config/firebase';
 
+
 // Define the prompt template for generating a summary
 const PROMPT_TEMPLATE_SUMMARY = `
 You are an expert AI content summarizer. Your task is to take the following article content and generate a concise, easy-to-read summary.
@@ -20,6 +21,7 @@ Now, generate a summary for the following article content:
  * @throws An error if the article is not found or the generation fails.
  */
 async function generateSummary(docId: string): Promise<string> {
+    const cacheKey = `summary:${docId}`;
     try {
         // 1. Fetch the article from Firestore (same as quiz route)
         const docRef = db.collection("articles").doc(docId);

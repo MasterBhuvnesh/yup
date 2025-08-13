@@ -2,6 +2,7 @@ import { genAI } from '../config';
 import { DocumentData } from 'firebase-admin/firestore';
 import db  from "../config/firebase"; // Add this line to import the Firestore instance
 
+
 const PROMPT_TEMPLATE_QUIZ = `
 You are a specialized AI quiz generator. Your task is to take a given article content and generate a quiz with 10 multiple-choice questions based on it.
 **IMPORTANT**: You MUST output ONLY the raw JSON object. Do not include any other text, explanations, or markdown formatting like \`\`\`json ... \`\`\`.
@@ -34,6 +35,7 @@ Now, generate the complete JSON array object for the following article content:
 
 
 async function generateQuiz(docId: string): Promise<any> {
+  const cacheKey = `quiz:${docId}`;
     try {
         // 1. Fetch the article from Firestore
         const docRef = db.collection("articles").doc(docId);
