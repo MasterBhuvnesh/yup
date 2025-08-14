@@ -1,77 +1,79 @@
 # YUP Backend Service
 
-This service generates article outlines and quizzes using the Gemini AI API, with Firebase Firestore for data storage.
+This backend service provides endpoints to generate and retrieve articles, quizzes, summaries, facts, and subtopics using the Gemini AI API and stores data in Firebase Firestore. It is built with TypeScript, Express, and Node.js, and supports Docker and Bun for deployment.
 
 ## API Endpoints
 
+All endpoints are registered at the root (`/`).
+
 ### Health Check
 
-- **GET `/health-check`**
-  - **Description:** Checks if the service is running.
-  - **Access:** Public
-  - **Response:**  
-    - `200 OK`:  
-      ```json
-      { "status": "UP", "timestamp": "...", "environment": "..." }
-      ```
+- **GET `/health-check`**: Returns service status, timestamp, and environment.
 
-### Article Management
+### Content Generation
 
-- **POST `/generate`**
-  - **Description:** Generates an article outline for a given topic using Gemini AI.
-  - **Access:** Public
-  - **Request Body:**  
-    ```json
-    { "topic": "string" }
-    ```
-  - **Responses:**
-    - `200 OK`: Article outline as a JSON array
-    - `400 Bad Request`:  
-      ```json
-      { "error": "A non-empty \"topic\" string is required in the request body." }
-      ```
-    - `500 Internal Server Error`:  
-      ```json
-      { "error": "An internal server error occurred while generating the article." }
-      ```
+- **POST `/content`**: Generates and saves all content (articles, quizzes, summaries, facts, subtopics) for a given topic.
 
-- **GET `/all`**
-  - **Description:** Retrieves all stored articles from Firestore.
-  - **Access:** Public
-  - **Responses:**
-    - `200 OK`: Array of articles with IDs and data
-    - `500 Internal Server Error`:  
-      ```json
-      { "error": "Failed to fetch articles from Firestore." }
-      ```
+### Article
 
-### Quiz Management
+- **GET `/generate`**: Generates or retrieves an article by ID.
 
-- **POST `/quiz`**
-  - **Description:** Generates a quiz from an existing article using its document ID.
-  - **Access:** Public
-  - **Request Body:**  
-    ```json
-    { "docId": "string" }
-    ```
-  - **Responses:**
-    - `200 OK`: Generated quiz data
-    - `400 Bad Request`:  
-      ```json
-      { "error": "Document ID (docId) is required." }
-      ```
-    - `500 Internal Server Error`:  
-      ```json
-      { "error": "Failed to generate quiz.", "details": "..." }
-      ```
+### Quiz
 
-## Architecture
+- **GET `/quiz`**: Retrieves a quiz for a given article document ID.
 
-- **Caching:** Redis
-- **Load Balancing:** Nginx, AWS ELB, Cloudflare
-- **Bulk Data Return:** Optimized to reduce Firestore read/write operations
-- **Rate Limiting:** Redis
-- **Horizontal Scaling:** Docker Swarm
-- **Runtime Environment:** Bun, TypeScript
-- **Containerization:** Docker
-- **CI/CD Pipeline:** GitHub Actions
+### Summary
+
+- **GET `/summary`**: Retrieves a summary for a given article document ID.
+
+### Facts
+
+- **GET `/facts`**: Retrieves facts for a given article document ID.
+
+### Subtopics
+
+- **GET `/subtopic`**: Retrieves all subtopic titles.
+
+All endpoints return JSON responses. Error handling is provided for missing parameters and internal errors.
+
+## Architecture & Features
+
+- **TypeScript & Express**: Modern, type-safe backend
+- **Firebase Firestore**: Used for persistent storage
+- **Gemini AI API**: Used for content and quiz generation
+- **SHA-256 Utility**: For secure hashing (see `src/utils/index.ts`)
+- **Environment-based config**: Uses `.env` for secrets and environment variables
+- **Health Check Cron**: Periodically pings `/health-check` and logs status
+- **Docker & Bun Support**: Can be run in Docker or with Bun runtime
+- **Production Ready**: Strict error handling, environment validation, and scalable structure
+
+## Setup & Usage
+
+1. Install dependencies:
+
+```sh
+npm install
+```
+
+2. Create a `.env` file with required variables (see `src/config/index.ts` for required keys like `GEMINI_API_KEY`, `NODE_ENV`, etc.)
+3. Build and run:
+
+```sh
+npm run build
+npm start
+```
+
+Or for development:
+
+```sh
+npm run dev
+```
+
+## Environment Variables
+
+- `GEMINI_API_KEY` (required)
+- `NODE_ENV` (`development` or `production`)
+- `PORT` (optional, default: 3000)
+- `API_URL` (required in production)
+
+
