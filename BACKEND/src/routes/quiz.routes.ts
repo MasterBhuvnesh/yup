@@ -5,6 +5,6 @@ const router = Router();
 
 
 // POST /quiz
-router.post("/quiz", handleGenerateQuiz);
+router.get("/quiz", handleGenerateQuiz);
 
 export default router;

@@ -1,6 +1,5 @@
 import { genAI } from '../config';
-import db from '../config/firebase';
-
+// No longer need to import db from firebase
 
 // Define the prompt template for generating a summary
 const PROMPT_TEMPLATE_SUMMARY = `
@@ -15,29 +14,19 @@ Now, generate a summary for the following article content:
 `;
 
 /**
- * Generates a summary for a given article from Firestore.
- * @param docId - The ID of the article document in Firestore.
+ * Generates a summary from a provided article object.
+ * @param articleJson - The full article object (title, content, sections, etc.).
  * @returns A string containing the generated summary.
- * @throws An error if the article is not found or the generation fails.
+ * @throws An error if the generation fails.
  */
-async function generateSummary(docId: string): Promise<string> {
-    const cacheKey = `summary:${docId}`;
+async function generateSummary(articleJson: any): Promise<string> {
     try {
-        // 1. Fetch the article from Firestore (same as quiz route)
-        const docRef = db.collection("articles").doc(docId);
-        const docSnap = await docRef.get();
-
-        if (!docSnap.exists) {
-            throw new Error(`Article with ID "${docId}" not found.`);
-        }
-
-        // 2. Extract and format the content for the prompt (same as quiz route)
-        // The data is stored in the 'Data' field and is an array.
-        const articleJson = docSnap.data()?.Data[0];
+        // The database fetching step has been removed.
         if (!articleJson) {
-            throw new Error(`Could not find article content in document "${docId}".`);
+            throw new Error('An article object must be provided to generate a summary.');
         }
 
+        // Format the article content for the AI prompt
         let contentForPrompt = `Title: ${articleJson.title}\n\nIntroduction: ${articleJson.content}\n\n`;
         articleJson.sections.forEach((section: { title: string; content: string[] }) => {
             contentForPrompt += `Section: ${section.title}\n`;
@@ -45,23 +34,19 @@ async function generateSummary(docId: string): Promise<string> {
             contentForPrompt += '\n\n';
         });
 
-        // 3. Get the generative model
+        // Get the generative model
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
-        // 4. Construct the full prompt with the new summary template
+        // Construct the full prompt
         const fullPrompt = `${PROMPT_TEMPLATE_SUMMARY}${contentForPrompt}`;
 
-        // 5. Call the AI model
+        // Call the AI model and return the text summary
         const result = await model.generateContent(fullPrompt);
         const response = result.response;
-        const summaryText = response.text().trim();
-
-        // 6. Return the plain text summary
-        return summaryText;
+        return response.text().trim();
 
     } catch (error) {
         console.error('Error in summary generation service:', error);
-        // Re-throw the error to be handled by the controller
         throw error;
     }
 }

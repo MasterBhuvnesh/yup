@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { createSummary } from "../controllers/summary.controller";
+import { handleGetSummaryByDocId } from "../controllers/summary.controller";
 
 const router = Router();
 
 
 // POST /summary
-router.post('/summary', createSummary);
+router.get('/summary', handleGetSummaryByDocId);
 
 export default router;

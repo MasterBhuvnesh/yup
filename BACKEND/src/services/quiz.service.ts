@@ -1,6 +1,7 @@
 import { genAI } from '../config';
 import { DocumentData } from 'firebase-admin/firestore';
 import db  from "../config/firebase"; // Add this line to import the Firestore instance
+import { generateArticlePlan } from './article.service';
 
 
 const PROMPT_TEMPLATE_QUIZ = `
@@ -34,24 +35,22 @@ Now, generate the complete JSON array object for the following article content:
 `;
 
 
-async function generateQuiz(docId: string): Promise<any> {
-  const cacheKey = `quiz:${docId}`;
+/**
+ * Generates a quiz from a provided article object.
+ * @param articleJson - The full article object (title, content, sections, etc.).
+ * @returns A promise that resolves to the quiz data.
+ */
+async function generateQuiz(articleJson: any): Promise<any> {
     try {
-        // 1. Fetch the article from Firestore
-        const docRef = db.collection("articles").doc(docId);
-        const docSnap = await docRef.get();
-
-        if (!docSnap.exists) {
-            throw new Error(`Article with ID "${docId}" not found.`);
-        }
-
-        // 2. Extract and format the content for the prompt
-        // The data is stored in the 'Data' field and is an array.
-        const articleJson = docSnap.data()?.Data[0];
+        // The article generation step has been removed.
+        // We now expect the article object to be passed directly.
         if (!articleJson) {
-            throw new Error(`Could not find article content in document "${docId}".`);
+            throw new Error('An article object must be provided to generate a quiz.');
         }
 
+        // =======================================================
+        // 📝 STEP 1: FORMAT ARTICLE CONTENT FOR THE QUIZ PROMPT
+        // =======================================================
         let contentForPrompt = `Title: ${articleJson.title}\n\nIntroduction: ${articleJson.content}\n\n`;
         articleJson.sections.forEach((section: { title: string; content: string[] }) => {
             contentForPrompt += `Section: ${section.title}\n`;
@@ -59,23 +58,20 @@ async function generateQuiz(docId: string): Promise<any> {
             contentForPrompt += '\n\n';
         });
 
-        // 3. Get the generative model
+        // =======================================================
+        // 🧠 STEP 2: GENERATE THE QUIZ USING THE CONTENT
+        // =======================================================
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
-
-        // 4. Construct the full prompt
         const fullPrompt = `${PROMPT_TEMPLATE_QUIZ}${contentForPrompt}`;
-
-        // 5. Call the AI model
         const result = await model.generateContent(fullPrompt);
         const response = result.response;
         const jsonText = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
 
-        // 6. Parse and return the JSON content
+        // Parse and return the final quiz data
         return JSON.parse(jsonText);
 
     } catch (error) {
         console.error('Error in quiz generation service:', error);
-        // Re-throw the error to be handled by the controller
         throw error;
     }
 }
