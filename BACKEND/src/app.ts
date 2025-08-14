@@ -8,6 +8,7 @@ import { config } from './config';
 import quizRoutes from './routes/quiz.routes';
 import summaryRoutes from './routes/summary.routes';
 import factsRoutes from './routes/facts.routes';
+import subtopicRoutes from './routes/subtopic.routes';
 
 
 dotenv.config();
@@ -41,6 +42,8 @@ app.use('/', quizRoutes);
 app.use('/',summaryRoutes);
 //All facts-related routes will be prefixed with /api/v1/facts
 app.use('/', factsRoutes);
+// All subtopic-related routes will be prefixed with /api/v1/subtopic
+app.use('/', subtopicRoutes);
 
 
 // --- Cron Job for Health Check ---
