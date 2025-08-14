@@ -2,11 +2,13 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cron from 'node-cron';
+import contentRoutes from './routes/content.routes';
 import articleRoutes from './routes/article.routes';
 import { config } from './config';
 import quizRoutes from './routes/quiz.routes';
 import summaryRoutes from './routes/summary.routes';
 import factsRoutes from './routes/facts.routes';
+
 
 dotenv.config();
 // Create the Express application instance
@@ -25,6 +27,8 @@ app.get('/health-check', (req, res) => {
     environment: config.nodeEnv,
   });
 });
+
+app.use('/', contentRoutes);
 
 // --- API Routes ---
 // All article-related routes will be prefixed with /api/v1/article
