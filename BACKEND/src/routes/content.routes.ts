@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { handleGenerateAndSaveAll } from '../controllers/content.controller';
+import { handleGenerateAndSaveAll } from '../controllers/main/content.controller';
 
 const router = Router();
 

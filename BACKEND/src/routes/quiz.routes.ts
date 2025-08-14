@@ -1,10 +1,9 @@
-import { Router } from "express";
-import { handleGetQuizByDocId } from "../controllers/quiz.controller";
+import { Router } from 'express';
+import { handleGetQuizByDocId } from '../controllers/helper/quiz.controller';
 
 const router = Router();
 
-
 // POST /quiz
-router.get("/quiz", handleGetQuizByDocId);
+router.get('/quiz', handleGetQuizByDocId);
 
 export default router;
