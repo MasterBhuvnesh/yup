@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { handleGenerateQuiz } from "../controllers/quiz.controller";
+import { handleGetQuizByDocId } from "../controllers/quiz.controller";
 
 const router = Router();
 
 
 // POST /quiz
-router.get("/quiz", handleGenerateQuiz);
+router.get("/quiz", handleGetQuizByDocId);
 
 export default router;
