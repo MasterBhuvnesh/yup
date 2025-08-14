@@ -6,7 +6,7 @@ const PROMPT_TEMPLATE_SUMMARY = `
 You are an expert AI content summarizer. Your task is to take the following article content and generate a concise, easy-to-read summary.
 
 **Instructions**:
-- The summary should be approximately 150-200 words.
+- The summary should be approximately 3-4 sentences long.
 - It must capture the main points, key arguments, and primary conclusions of the article.
 - The output must be a single block of plain text. Do NOT use markdown, titles, or JSON formatting.
 
