@@ -8,7 +8,7 @@ import { config } from './config';
 import quizRoutes from './routes/quiz.routes';
 import summaryRoutes from './routes/summary.routes';
 import factsRoutes from './routes/facts.routes';
-import subtopicRoutes from './routes/subtopic.routes';
+import dataRoutes from './routes/data.routes';
 
 
 dotenv.config();
@@ -32,18 +32,19 @@ app.get('/health-check', (req, res) => {
 app.use('/', contentRoutes);
 
 // --- API Routes ---
-// All article-related routes will be prefixed with /api/v1/article
+// All article-related routes will be prefixed with /article
 app.use('/', articleRoutes);
 
-// All quiz-related routes will be prefixed with /api/v1/quiz
+// All quiz-related routes will be prefixed with /quiz
 
 app.use('/', quizRoutes);
-// All summary-related routes will be prefixed with /api/v1/summary
+// All summary-related routes will be prefixed with /summary
 app.use('/',summaryRoutes);
-//All facts-related routes will be prefixed with /api/v1/facts
+//All facts-related routes will be prefixed with /facts
 app.use('/', factsRoutes);
-// All subtopic-related routes will be prefixed with /api/v1/subtopic
-app.use('/', subtopicRoutes);
+
+// All data-related routes will be prefixed with /data
+app.use('/', dataRoutes);
 
 
 // --- Cron Job for Health Check ---
