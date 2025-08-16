@@ -3,6 +3,7 @@ import { getAppCheck } from 'firebase-admin/app-check';
 import * as dotenv from 'dotenv';
 import * as admin from 'firebase-admin';
 
+
 // Load env variables
 dotenv.config();
 let serviceAccount: any;
