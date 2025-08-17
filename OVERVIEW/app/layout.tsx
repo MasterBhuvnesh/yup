@@ -1,6 +1,6 @@
 import { inter } from "@/constants";
+import "@/styles/globals.css";
 import { generateMetadata } from "@/utils";
-import "./globals.css";
 
 export const metadata = generateMetadata(); 
 

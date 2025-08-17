@@ -20,12 +20,12 @@ export const metadataInputSchema = z.object({
         {
             rel: "icon",
             sizes: "512x512",
-            url: "/icons/logo.png",
+            url: "/icons/icon.png",
         },
         {
             rel: "manifest",
             sizes: "512x512",
-            url: "/icons/logo.ico",
+            url: "/icons/icon.ico",
         },
     ]),
     noIndex: z.boolean().optional(),
