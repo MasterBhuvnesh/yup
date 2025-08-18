@@ -1,6 +1,7 @@
 import { inter } from "@/constants";
 import "@/styles/globals.css";
 import { generateMetadata } from "@/utils";
+import { Analytics } from "@vercel/analytics/next";
 import { Metadata } from "next";
 
 const pageMetadata = generateMetadata();
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
