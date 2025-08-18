@@ -8,7 +8,7 @@ export default function Home() {
         alt="Hero Image"
         width={500}
         height={500}
-        className="rounded-lg"
+        className="rounded-lg prevent-select-drag"
       />
     </div>
   );

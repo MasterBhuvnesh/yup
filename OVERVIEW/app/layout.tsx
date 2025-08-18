@@ -1,8 +1,13 @@
 import { inter } from "@/constants";
 import "@/styles/globals.css";
 import { generateMetadata } from "@/utils";
+import { Metadata } from "next";
 
-export const metadata = generateMetadata(); 
+const pageMetadata = generateMetadata();
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+  ...pageMetadata,
+};
 
 export default function RootLayout({
   children,
@@ -11,11 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${inter.variable} antialiased`}>{children}</body>
     </html>
   );
 }
