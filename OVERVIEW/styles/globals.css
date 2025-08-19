@@ -19,7 +19,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.prevent-select-drag {
+* {
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none; /* Safari */
