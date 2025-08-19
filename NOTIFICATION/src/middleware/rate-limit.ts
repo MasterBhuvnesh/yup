@@ -9,7 +9,7 @@ export const generalRateLimit = rateLimit({
   max: 100,
   message: {
     error: 'Too many requests from this IP, please try again later.',
-    statusCode: 429
+    statusCode: 429,
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -20,8 +20,9 @@ export const strictRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
   max: 10,
   message: {
-    error: 'Rate limit exceeded for this endpoint. Please wait before trying again.',
-    statusCode: 429
+    error:
+      'Rate limit exceeded for this endpoint. Please wait before trying again.',
+    statusCode: 429,
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -32,8 +33,9 @@ export const notificationRateLimit = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
   max: 5,
   message: {
-    error: 'Notification sending rate limit exceeded. Please wait before sending again.',
-    statusCode: 429
+    error:
+      'Notification sending rate limit exceeded. Please wait before sending again.',
+    statusCode: 429,
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -43,7 +45,7 @@ export const notificationRateLimit = rateLimit({
       const token = authHeader.split(' ')[1];
       return `token:${token}`;
     }
-    return  safeIpKeyGenerator(req);
+    return safeIpKeyGenerator(req);
   },
 });
 
@@ -53,7 +55,7 @@ export const tokenRegisterRateLimit = rateLimit({
   max: 20,
   message: {
     error: 'Too many token registration attempts. Please try again later.',
-    statusCode: 429
+    statusCode: 429,
   },
   standardHeaders: true,
   legacyHeaders: false,

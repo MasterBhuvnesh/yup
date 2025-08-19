@@ -1,6 +1,6 @@
 export const getRateLimitConfig = () => {
   const isProduction = process.env.NODE_ENV === 'production';
-  
+
   return {
     general: {
       windowMs: 15 * 60 * 1000,
@@ -17,6 +17,6 @@ export const getRateLimitConfig = () => {
     tokenRegister: {
       windowMs: 15 * 60 * 1000,
       max: isProduction ? 20 : 100,
-    }
+    },
   };
 };
