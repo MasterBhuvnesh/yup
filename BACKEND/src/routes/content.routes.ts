@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import { handleGenerateAndSaveAll } from '../controllers/main/content.controller';
+import { handleGetContentById } from '../controllers/main/content.controller';
 
 const router = Router();
 
-// This single endpoint generates and saves everything
-router.post('/content', handleGenerateAndSaveAll);
+// This route uses two parameters: the collection and the document ID
+router.get('/:collectionName/:docId', handleGetContentById);
 
-// You can add other routes here as well
 export default router;

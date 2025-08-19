@@ -9,6 +9,7 @@ import quizRoutes from './routes/quiz.routes';
 import summaryRoutes from './routes/summary.routes';
 import factsRoutes from './routes/facts.routes';
 import dataRoutes from './routes/data.routes';
+import generationRoutes from './routes/generation.routes';
 
 
 dotenv.config();
@@ -28,6 +29,10 @@ app.get('/health-check', (req, res) => {
     environment: config.nodeEnv,
   });
 });
+
+// --- API Routes ---
+// All generation-related routes will be prefixed with /generation
+app.use('/', generationRoutes);
 
 app.use('/', contentRoutes);
 
