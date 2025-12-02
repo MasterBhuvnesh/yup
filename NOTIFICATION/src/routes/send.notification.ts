@@ -13,12 +13,14 @@ const router = Router();
  * @desc    Send a push notification to all registered Expo tokens
  * @access  Protected
  */
-router.get(
+router.post(
   '/send',
   notificationRateLimit,
   authenticate,
-  async (_req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     try {
+      const { title, body, imageUrl } = req.body;
+
       const snapshot = await db.collection('tokens').get();
       if (snapshot.empty) {
         return res.status(200).json({ message: 'No tokens to send.' });
@@ -27,11 +29,24 @@ router.get(
       const tokens: string[] = [];
       snapshot.forEach((doc) => tokens.push(doc.id));
 
-      const messages = tokens.map((token) => ({
-        to: token,
-        title: 'Machine Learning',
-        body: 'Deep learning enables neural networks to learn patterns efficiently.',
-      }));
+      const messages = tokens.map((token) => {
+        const notification: any = {
+          to: token,
+          sound: 'default',
+          title: title || 'Machine Learning',
+          body:
+            body ||
+            'Deep learning enables neural networks to learn patterns efficiently.',
+        };
+
+        if (imageUrl) {
+          notification.richContent = {
+            image: imageUrl,
+          };
+        }
+
+        return notification;
+      });
 
       const response = await axios.post(
         'https://exp.host/--/api/v2/push/send',

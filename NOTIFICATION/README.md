@@ -24,20 +24,24 @@ A robust Bun-based server for managing Expo push notifications with Firebase Fir
 ## 🛠️ Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd NOTIFICATION
    ```
 
 2. **Install dependencies**
+
    ```bash
    bun install
    ```
 
 3. **Environment Setup**
+
    ```bash
    cp .env.sample .env
    ```
+
    Fill in your Firebase credentials and other configuration values in `.env`
 
 4. **Validate and format code**
@@ -49,17 +53,17 @@ A robust Bun-based server for managing Expo push notifications with Firebase Fir
 
 ### Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NODE_ENV` | Environment (development/production) | Yes |
-| `PORT` | Server port (default: 3000) | No |
-| `AUTH_TOKEN` | Bearer token for API authentication | Yes |
-| `HEALTHCHECK_URL` | URL for heartbeat health checks | No |
-| `FIREBASE_PROJECT_ID` | Firebase project ID | Yes |
-| `FIREBASE_CLIENT_EMAIL` | Firebase service account email | Yes |
-| `FIREBASE_PRIVATE_KEY` | Firebase private key | Yes |
-| `FIREBASE_PRIVATE_KEY_ID` | Firebase private key ID | Yes |
-| Other Firebase vars | See `.env.sample` for complete list | Yes |
+| Variable                  | Description                          | Required |
+| ------------------------- | ------------------------------------ | -------- |
+| `NODE_ENV`                | Environment (development/production) | Yes      |
+| `PORT`                    | Server port (default: 3000)          | No       |
+| `AUTH_TOKEN`              | Bearer token for API authentication  | Yes      |
+| `HEALTHCHECK_URL`         | URL for heartbeat health checks      | No       |
+| `FIREBASE_PROJECT_ID`     | Firebase project ID                  | Yes      |
+| `FIREBASE_CLIENT_EMAIL`   | Firebase service account email       | Yes      |
+| `FIREBASE_PRIVATE_KEY`    | Firebase private key                 | Yes      |
+| `FIREBASE_PRIVATE_KEY_ID` | Firebase private key ID              | Yes      |
+| Other Firebase vars       | See `.env.sample` for complete list  | Yes      |
 
 ### Firebase Setup
 
@@ -71,16 +75,19 @@ A robust Bun-based server for managing Expo push notifications with Firebase Fir
 ## 🚀 Usage
 
 ### Development
+
 ```bash
 bun run dev
 ```
 
 ### Production
+
 ```bash
 bun run start
 ```
 
 ### Testing
+
 ```bash
 # Run tests
 bun test
@@ -93,6 +100,7 @@ bun run test:coverage
 ```
 
 ### Code Quality
+
 ```bash
 # Check formatting and linting
 bun run validate
@@ -112,6 +120,7 @@ bun run lint:fix
 ### Authentication
 
 All protected endpoints require a Bearer token in the Authorization header:
+
 ```
 Authorization: Bearer your_auth_token_here
 ```
@@ -119,6 +128,7 @@ Authorization: Bearer your_auth_token_here
 ### Endpoints
 
 #### Health Check
+
 - **GET** `/healthcheck`
 - **Description**: Check service health status
 - **Access**: Public
@@ -131,6 +141,7 @@ Authorization: Bearer your_auth_token_here
   ```
 
 #### Register Push Token
+
 - **POST** `/register-token`
 - **Description**: Register a new Expo push token
 - **Access**: Protected
@@ -147,6 +158,7 @@ Authorization: Bearer your_auth_token_here
   - `500 Internal Server Error`: Database error
 
 #### Get All Tokens
+
 - **GET** `/get-tokens`
 - **Description**: Retrieve all registered push tokens
 - **Access**: Protected
@@ -161,20 +173,27 @@ Authorization: Bearer your_auth_token_here
   ```
 
 #### Send Notifications
-- **GET** `/send`
+
+- **POST** `/send`
 - **Description**: Send push notifications to all registered devices
 - **Access**: Protected
-- **Response**:
+- **Request Body**:
   ```json
   {
-    "message": "Notifications sent to X devices",
-    "deleted": ["invalid_token1", "invalid_token2"]
+    "title": "Custom Title",
+    "body": "Custom Body",
+    "imageUrl": "http://example.com/image.png"
   }
   ```
+- **Responses**:
+  - `200 OK`: Notifications sent successfully
+  - `401 Unauthorized`: Missing/invalid authentication
+  - `500 Internal Server Error`: Database error
 
 ## 🐳 Docker Deployment
 
 ### Using Docker
+
 ```bash
 # Build the image
 docker build -t yup .
@@ -184,6 +203,7 @@ docker run -p 3000:3000 --env-file .env yup
 ```
 
 ### Using Docker Compose
+
 ```bash
 # Build and start services
 docker-compose up --build
@@ -247,7 +267,7 @@ The project includes automated release scripts:
 # Patch version (1.0.0 -> 1.0.1)
 bun run do-release
 
-# Minor version (1.0.0 -> 1.1.0)  
+# Minor version (1.0.0 -> 1.1.0)
 bun run do-release:minor
 
 # Major version (1.0.0 -> 2.0.0)
@@ -259,11 +279,13 @@ bun run do-release:major
 ## 🔧 Development
 
 ### Code Style
+
 - **ESLint**: Linting with TypeScript support
 - **Prettier**: Code formatting
 - **TypeScript**: Strict type checking enabled
 
 ### Monitoring
+
 - **Heartbeat Job**: Automatic health checks every 14 minutes (production only)
 - **Error Logging**: Comprehensive error tracking and logging
 - **Token Cleanup**: Automatic removal of invalid/expired tokens
