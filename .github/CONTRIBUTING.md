@@ -1,1 +1,1 @@
-its a CONTRIBUTING.md file
+Contributing guidelines will be added later.

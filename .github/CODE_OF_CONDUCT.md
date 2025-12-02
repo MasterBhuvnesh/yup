@@ -1,1 +1,1 @@
-its a CODE_OF_CONDUCT.md file
+Code of Conduct will be added later.
