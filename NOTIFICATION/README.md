@@ -2,7 +2,7 @@
 
 A robust Bun-based server for managing Expo push notifications with Firebase Firestore integration. This service provides secure token management, notification delivery, and automatic cleanup of invalid tokens.
 
-## 🚀 Features
+## Features
 
 - **Expo Push Notifications**: Send notifications to mobile devices using Expo's push notification service
 - **Firebase Integration**: Store and manage push tokens using Firebase Firestore
@@ -15,13 +15,13 @@ A robust Bun-based server for managing Expo push notifications with Firebase Fir
 - **Testing**: Unit tests using Bun's built-in test runner
 - **Code Quality**: ESLint and Prettier configuration for consistent code style
 
-## 📋 Prerequisites
+## Prerequisites
 
 - [Bun](https://bun.sh/) >= 1.1.13
 - Firebase project with Firestore enabled
 - Firebase service account credentials
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the repository**
 
@@ -49,7 +49,7 @@ A robust Bun-based server for managing Expo push notifications with Firebase Fir
    bun run validate:fix
    ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -72,7 +72,7 @@ A robust Bun-based server for managing Expo push notifications with Firebase Fir
 3. Create a service account and download the credentials
 4. Extract the credentials into your `.env` file
 
-## 🚀 Usage
+## Usage
 
 ### Development
 
@@ -115,7 +115,7 @@ bun run format:fix
 bun run lint:fix
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 ### Authentication
 
@@ -190,7 +190,7 @@ Authorization: Bearer your_auth_token_here
   - `401 Unauthorized`: Missing/invalid authentication
   - `500 Internal Server Error`: Database error
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ### Using Docker
 
@@ -215,7 +215,7 @@ docker-compose up
 docker-compose down
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 The service follows a clean architecture pattern with clear separation of concerns:
 
@@ -244,7 +244,7 @@ src/
 - **Validation**: Input validation using Joi schemas
 - **Logging**: Structured logging with environment-based levels
 
-## 🧪 Testing
+## Testing
 
 The project includes comprehensive unit tests using Bun's built-in test runner:
 
@@ -259,7 +259,7 @@ bun test src/__tests__/token.service.test.ts
 bun run test:coverage
 ```
 
-## 📦 Release Management
+## Release Management
 
 The project includes automated release scripts:
 
@@ -276,7 +276,7 @@ bun run do-release:major
 
 > **Note**: Use release commands only when ready to build and deploy to production.
 
-## 🔧 Development
+## Development
 
 ### Code Style
 
@@ -290,7 +290,7 @@ bun run do-release:major
 - **Error Logging**: Comprehensive error tracking and logging
 - **Token Cleanup**: Automatic removal of invalid/expired tokens
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/your-feature`
@@ -300,14 +300,10 @@ bun run do-release:major
 6. Push to the branch: `git push origin feature/your-feature`
 7. Submit a pull request
 
-## 📄 License
+## License
 
 This project is licensed under the ISC License.
 
-## 📞 Support
+## Support
 
 For issues and questions, please create an issue in the repository or contact the maintainer.
-
----
-
-**Author**: Bhuvnesh Verma
