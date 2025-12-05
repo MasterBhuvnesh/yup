@@ -55,8 +55,9 @@ jobs:
           context: ./NOTIFICATION
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/yup:latest
-            ${{ secrets.DOCKER_USERNAME }}/yup:${{ steps.version.outputs.VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/studzee-notification:latest
+            ${{ secrets.DOCKER_USERNAME }}/studzee-notification:${{ steps.version.outputs.VERSION }}
 
-      - name: Trigger Render deploy hook
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+# Trigger Render deploy hook
+      # - name: Trigger Render deploy hook
+        # run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
