@@ -74,7 +74,8 @@ echo -e "${YELLOW}Bumping version for '${SERVICE_NAME}' by '$VERSION_TYPE'...${N
 npm version "$VERSION_TYPE" --no-git-tag-version
 
 # Retrieve the newly updated version from 'package.json'.
-VERSION=$(jq -r '.version' package.json)
+# VERSION=$(jq -r '.version' package.json)
+VERSION=$(grep -oP '"version": "\K[^"]+' package.json)
 echo -e "${GREEN}New version for '${SERVICE_NAME}' is: $VERSION${NC}"
 
 # Stage 'package.json' and 'package-lock.json' for Git commit.
