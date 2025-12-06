@@ -2,8 +2,6 @@
 
 This is a production-ready backend service written in **TypeScript** that exposes a public `GET /content` endpoint (list of document titles) and an authenticated `GET /content/:id` endpoint (full document). It uses **MongoDB** for storage and **Redis** for caching.
 
-This project was bootstrapped with Gemini.
-
 ## Features
 
 - **Express.js** server with TypeScript.

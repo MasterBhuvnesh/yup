@@ -1,22 +1,68 @@
-services:
-  api:
-    build: .
-    container_name: studzee_api
-    ports:
-      - '4000:4000'
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - mongo
-      - redis
-    env_file:
-      - .env
-    command: sh -c "npm install && npm run dev"
+# services:
+#   api:
+#     build: .
+#     container_name: studzee_api
+#     ports:
+#       - '4000:4000'
+#     volumes:
+#       - .:/usr/src/app
+#       - /usr/src/app/node_modules
+#     depends_on:
+#       - mongo
+#       - redis
+#     env_file:
+#       - .env
+#     user: root
+#     command: sh -c "npm install && npm run dev"
+#     networks:
+#       - studzee-network
 
+#   mongo:
+#     image: mongo:6.0
+#     container_name: studzee_mongo
+#     ports:
+#       - '27017:27017'
+#     volumes:
+#       - mongo-data:/data/db
+#     environment:
+#       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+#       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+#     networks:
+#       - studzee-network
+
+#   # Replaced standard Redis with Redis Stack for more features
+#   redis:
+#     image: redis/redis-stack:latest
+#     container_name: studzee_redis_stack
+#     ports:
+#       - '6379:6379' # Standard Redis port
+#       - '8001:8001' # RedisInsight dashboard port from Redis Stack
+#     volumes:
+#       - redis-data:/data
+#     networks:
+#       - studzee-network
+
+# volumes:
+#   mongo-data:
+#     name: studzee-mongo-data
+#   redis-data:
+#     name: studzee-redis-data
+
+# networks:
+#   studzee-network:
+#     name: studzee-network
+#     driver: bridge
+
+
+#  It will only run the mongo and redis containers
+
+version: '3.8'
+
+services:
   mongo:
     image: mongo:6.0
     container_name: studzee_mongo
+    restart: unless-stopped
     ports:
       - '27017:27017'
     volumes:
@@ -24,17 +70,28 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+    networks:
+      - studzee-network
 
-  # Replaced standard Redis with Redis Stack for more features
   redis:
     image: redis/redis-stack:latest
     container_name: studzee_redis_stack
+    restart: unless-stopped
     ports:
-      - '6379:6379' # Standard Redis port
-      - '8001:8001' # RedisInsight dashboard port from Redis Stack
+      - '6379:6379' 
+      - '8001:8001' 
     volumes:
       - redis-data:/data
+    networks:
+      - studzee-network
 
 volumes:
   mongo-data:
+    name: studzee-mongo-data
   redis-data:
+    name: studzee-redis-data
+
+networks:
+  studzee-network:
+    name: studzee-network
+    driver: bridge
