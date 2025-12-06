@@ -1,5 +1,5 @@
 {
-  "name": "yup",
+  "name": "studzee-notification-api",
   "version": "3.4.3",
   "description": "A Bun server for handling Expo push notifications using Firebase",
   "main": "src/index.ts",
