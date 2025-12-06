@@ -13,7 +13,10 @@
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "seed": "ts-node src/scripts/seed.ts",
-    "job:refresh-cache": "ts-node src/scripts/run-job.ts"
+    "job:refresh-cache": "ts-node src/scripts/run-job.ts",
+    "do-release": "bash ../code.sh backend patch",
+    "do-release:minor": "bash ../code.sh backend minor",
+    "do-release:major": "bash ../code.sh backend major"
   },
   "keywords": [
     "typescript",
